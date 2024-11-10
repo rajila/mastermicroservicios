@@ -1,15 +1,15 @@
-package es.rdajila.cursosjpa.dao;
+package es.rdajila.cursosjpa.services;
 
 import es.rdajila.cursosjpa.model.Curso;
 import java.util.List;
 
-public interface ICursoDAO {
+public interface ICursoService {
     List<Curso> getAll();
     Curso getById(Long eId);
     List<Curso> getByName(String eName);
     List<Curso> getByCategory(String eCategory);
     List<Curso> getByTeacher(String eTeacher);
-    void save(Curso eCourse);
+    boolean save(Curso eCourse);
     void update(Curso eCourse);
-    void delete(Long eId);
+    boolean delete(Long eId);
 }
