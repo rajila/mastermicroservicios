@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ServiceImpl implements ICursoService{
+public class CursoServiceImpl implements ICursoService{
     @Autowired
     ICursoDAO cursoDAO;
 
