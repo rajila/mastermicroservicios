@@ -39,11 +39,10 @@ public class CursoServiceImpl implements ICursoService{
 
     @Override
     public boolean save(Curso eCourse) {
-        boolean result = cursoDAO.getById(eCourse.getId()) != null;
-        if (result) {
-            cursoDAO.save(eCourse);
-        }
-        return result;
+        eCourse.setId(null);
+        cursoDAO.save(eCourse);
+
+        return true;
     }
 
     @Override
