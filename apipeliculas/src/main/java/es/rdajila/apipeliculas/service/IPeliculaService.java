@@ -8,4 +8,5 @@ import java.util.List;
 public interface IPeliculaService {
     List<Pelicula> getAll();
     Boolean create(PeliculaDtoInput ePeliculaInput);
+    List<Pelicula> getByActorId(Integer eActorId);
 }

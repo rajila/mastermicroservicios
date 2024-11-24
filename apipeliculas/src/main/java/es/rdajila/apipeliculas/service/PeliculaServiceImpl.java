@@ -63,4 +63,9 @@ public class PeliculaServiceImpl implements IPeliculaService{
         }
         return false;
     }
+
+    @Override
+    public List<Pelicula> getByActorId(Integer eActorId) {
+        return peliculaDao.getAllByActorId(eActorId);
+    }
 }

@@ -28,7 +28,12 @@ public class PeliculaDaoImpl implements IPeliculaDao{
     }
 
     @Override
-    public List<Pelicula> getAllByActorId(Actor eActor) {
-        return repository.findByActoresEquals(eActor);
+    public List<Pelicula> getAllByActorList(List<Actor> eActores) {
+        return repository.findByActoresEquals(eActores);
+    }
+
+    @Override
+    public List<Pelicula> getAllByActorId(Integer eActorId) {
+        return repository.getByActorId(eActorId);
     }
 }

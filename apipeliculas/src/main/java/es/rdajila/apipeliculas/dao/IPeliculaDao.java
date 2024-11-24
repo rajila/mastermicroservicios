@@ -9,5 +9,6 @@ import java.util.Optional;
 public interface IPeliculaDao {
     List<Pelicula> getAll();
     Optional<Pelicula> save(Pelicula ePelicula);
-    List<Pelicula> getAllByActorId(Actor eActor);
+    List<Pelicula> getAllByActorList(List<Actor> eActores);
+    List<Pelicula> getAllByActorId(Integer eActorId);
 }

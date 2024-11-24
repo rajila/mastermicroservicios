@@ -75,7 +75,7 @@ public class ActorServiceImpl implements IActorService{
     public Boolean delete(Integer eId) {
         Actor actorObj = actorDao.getById(eId).orElse(null);
         if (actorObj != null) {
-            List<Pelicula> peliculas = peliculaDao.getAllByActorId(actorObj);
+            List<Pelicula> peliculas = peliculaDao.getAllByActorList(List.of(actorObj));
             for (Pelicula pelicula : peliculas) {
                 pelicula.getActores().remove(actorObj);
                 peliculaDao.save(pelicula);

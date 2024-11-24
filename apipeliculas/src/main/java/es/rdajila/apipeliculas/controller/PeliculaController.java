@@ -27,6 +27,12 @@ public class PeliculaController {
     }
 
     @CrossOrigin
+    @GetMapping("/actor/{idActor}")
+    public ResponseEntity<List<Pelicula>> delete(@PathVariable("idActor") Integer eId) {
+        return ResponseEntity.ok(service.getByActorId(eId));
+    }
+
+    @CrossOrigin
     @PostMapping(value = {"", "/"})
     public ResponseEntity<String> create(@RequestBody PeliculaDtoInput ePeliculaInput) {
         Boolean _response = service.create(ePeliculaInput);
