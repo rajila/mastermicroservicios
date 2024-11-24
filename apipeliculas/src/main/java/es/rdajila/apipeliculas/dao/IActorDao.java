@@ -7,5 +7,6 @@ import java.util.Optional;
 
 public interface IActorDao {
     List<Actor> getAll();
+    Optional<Actor> getById(int eId);
     Optional<Actor> save(Actor eActor);
 }

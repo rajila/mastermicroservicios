@@ -24,6 +24,11 @@ public class ActorDaoImpl implements IActorDao {
     }
 
     @Override
+    public Optional<Actor> getById(int eId) {
+        return repository.findById(eId);
+    }
+
+    @Override
     public Optional<Actor> save(Actor eActor) {
         return Optional.of(repository.save(eActor));
     }

@@ -28,20 +28,20 @@ public class Pelicula {
     @Column(name = "portada", nullable = false, length = 250)
     private String portada;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_director", nullable = false)
     private Director directorp;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "id_pais", nullable = false)
     private Pais country;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "tbl_pelicula_actor", joinColumns = @JoinColumn(name = "id_pelicula", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "id_actor", referencedColumnName = "id"))
     private List<Actor> actores = new ArrayList<>();
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "tbl_pelicula_genero", joinColumns = @JoinColumn(name = "id_pelicula", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "id_genero", referencedColumnName = "id"))
     private List<Genero> generos = new ArrayList<>();
