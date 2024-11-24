@@ -32,4 +32,10 @@ public class ActorDaoImpl implements IActorDao {
     public Optional<Actor> save(Actor eActor) {
         return Optional.of(repository.save(eActor));
     }
+
+    @Override
+    public Boolean delete(Actor eActor) {
+        repository.delete(eActor);
+        return true;
+    }
 }

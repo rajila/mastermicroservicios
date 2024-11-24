@@ -9,4 +9,5 @@ public interface IActorService {
     List<Actor> getAll();
     Boolean create(ActorDtoInput eActorInput);
     Boolean update(ActorDtoInput eActorInput);
+    Boolean delete(Integer eId);
 }

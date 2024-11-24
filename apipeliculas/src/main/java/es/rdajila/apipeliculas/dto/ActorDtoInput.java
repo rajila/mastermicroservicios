@@ -11,8 +11,8 @@ import java.util.Date;
 @AllArgsConstructor
 public class ActorDtoInput {
     private Integer id;
-    private String name;
-    private String surname;
+    private String nombre;
+    private String apellido;
     private Integer idPais;
 
     @JsonFormat(pattern="yyyy-MM-dd", locale = "es-ES", timezone = "Europe/Madrid")
@@ -43,19 +43,19 @@ public class ActorDtoInput {
         this.idPais = idPais;
     }
 
-    public String getName() {
-        return name;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public String getSurname() {
-        return surname;
+    public String getApellido() {
+        return apellido;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
     }
 }

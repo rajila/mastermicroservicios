@@ -1,5 +1,6 @@
 package es.rdajila.apipeliculas.dao;
 
+import es.rdajila.apipeliculas.model.Actor;
 import es.rdajila.apipeliculas.model.Pelicula;
 import es.rdajila.apipeliculas.repository.IPeliculaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,5 +25,10 @@ public class PeliculaDaoImpl implements IPeliculaDao{
     @Override
     public Optional<Pelicula> save(Pelicula ePelicula) {
         return Optional.of(repository.save(ePelicula));
+    }
+
+    @Override
+    public List<Pelicula> getAllByActorId(Actor eActor) {
+        return repository.findByActoresEquals(eActor);
     }
 }

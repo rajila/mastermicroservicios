@@ -9,4 +9,5 @@ public interface IActorDao {
     List<Actor> getAll();
     Optional<Actor> getById(int eId);
     Optional<Actor> save(Actor eActor);
+    Boolean delete(Actor eActor);
 }
