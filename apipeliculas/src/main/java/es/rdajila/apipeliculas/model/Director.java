@@ -12,7 +12,7 @@ public class Director {
     @MapsId
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id", nullable = false)
-    private Usuario tblUsuario;
+    private Usuario user;
 
     public Integer getId() {
         return id;
@@ -22,12 +22,12 @@ public class Director {
         this.id = id;
     }
 
-    public Usuario getTblUsuario() {
-        return tblUsuario;
+    public Usuario getUser() {
+        return user;
     }
 
-    public void setTblUsuario(Usuario tblUsuario) {
-        this.tblUsuario = tblUsuario;
+    public void setUser(Usuario user) {
+        this.user = user;
     }
 
 }

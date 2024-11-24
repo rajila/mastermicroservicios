@@ -30,11 +30,11 @@ public class Pelicula {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_director", nullable = false)
-    private Director idDirector;
+    private Director directorp;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_pais", nullable = false)
-    private Pais idPais;
+    private Pais country;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "tbl_pelicula_actor", joinColumns = @JoinColumn(name = "id_pelicula", referencedColumnName = "id"),
@@ -46,12 +46,12 @@ public class Pelicula {
             inverseJoinColumns = @JoinColumn(name = "id_genero", referencedColumnName = "id"))
     private List<Genero> generos = new ArrayList<>();
 
-    public Pais getIdPais() {
-        return idPais;
+    public Pais getCountry() {
+        return country;
     }
 
-    public void setIdPais(Pais idPais) {
-        this.idPais = idPais;
+    public void setCountry(Pais country) {
+        this.country = country;
     }
 
     public Integer getId() {
@@ -102,12 +102,12 @@ public class Pelicula {
         this.portada = portada;
     }
 
-    public Director getIdDirector() {
-        return idDirector;
+    public Director getDirectorp() {
+        return directorp;
     }
 
-    public void setIdDirector(Director idDirector) {
-        this.idDirector = idDirector;
+    public void setDirectorp(Director directorp) {
+        this.directorp = directorp;
     }
 
     public List<Actor> getActores() {
