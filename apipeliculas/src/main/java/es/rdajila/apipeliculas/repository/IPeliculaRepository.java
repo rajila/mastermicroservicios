@@ -9,10 +9,11 @@ import java.util.List;
 
 public interface IPeliculaRepository extends JpaRepository<Pelicula, Integer> {
     List<Pelicula> findByActoresEquals(List<Actor> eActores);
-
     @Query("select p from Pelicula p join p.actores a join a.user u where u.nombre like %?1%")
     List<Pelicula> getByActorNombre(String eNombre);
-
     @Query("select p from Pelicula p join p.actores a where a.id = ?1")
     List<Pelicula> getByActorId(Integer eId);
+    List<Pelicula> findByTituloContainingIgnoreCase(String titulo);
+    @Query("select p from Pelicula p join p.generos g where g.id = ?1")
+    List<Pelicula> getByGeneroId(Integer eId);
 }

@@ -36,4 +36,25 @@ public class PeliculaDaoImpl implements IPeliculaDao{
     public List<Pelicula> getAllByActorId(Integer eActorId) {
         return repository.getByActorId(eActorId);
     }
+
+    @Override
+    public Optional<Pelicula> getById(Integer ePeliculaId) {
+        return repository.findById(ePeliculaId);
+    }
+
+    @Override
+    public Boolean delete(Pelicula ePelicula) {
+        repository.delete(ePelicula);
+        return true;
+    }
+
+    @Override
+    public List<Pelicula> getByTitulo(String eTitulo) {
+        return repository.findByTituloContainingIgnoreCase(eTitulo);
+    }
+
+    @Override
+    public List<Pelicula> getByGeneroId(Integer eGeneroId) {
+        return repository.getByGeneroId(eGeneroId);
+    }
 }

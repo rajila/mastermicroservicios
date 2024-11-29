@@ -9,4 +9,8 @@ public interface IPeliculaService {
     List<Pelicula> getAll();
     Boolean create(PeliculaDtoInput ePeliculaInput);
     List<Pelicula> getByActorId(Integer eActorId);
+    Boolean update(PeliculaDtoInput ePeliculaInput);
+    Boolean delete(Integer eId);
+    List<Pelicula> getByTitulo(String eTitulo);
+    List<Pelicula> getByGeneroId(Integer eGeneroId);
 }

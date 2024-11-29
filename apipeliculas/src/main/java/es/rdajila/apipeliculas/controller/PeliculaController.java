@@ -27,16 +27,44 @@ public class PeliculaController {
     }
 
     @CrossOrigin
-    @GetMapping("/actor/{idActor}")
-    public ResponseEntity<List<Pelicula>> delete(@PathVariable("idActor") Integer eId) {
-        return ResponseEntity.ok(service.getByActorId(eId));
-    }
-
-    @CrossOrigin
     @PostMapping(value = {"", "/"})
     public ResponseEntity<String> create(@RequestBody PeliculaDtoInput ePeliculaInput) {
         Boolean _response = service.create(ePeliculaInput);
         if (_response) return ResponseEntity.ok("Pelicula registrada");
         return new ResponseEntity<>("Error!!", HttpStatus.FAILED_DEPENDENCY);
+    }
+
+    @CrossOrigin
+    @PutMapping(value = {"", "/"})
+    public ResponseEntity<String> update(@RequestBody PeliculaDtoInput ePeliculaInput) {
+        Boolean _response = service.update(ePeliculaInput);
+        if (_response) return ResponseEntity.ok("Pelicula actualizado");
+        return new ResponseEntity<>("Error!!", HttpStatus.FAILED_DEPENDENCY);
+    }
+
+    @CrossOrigin
+    @DeleteMapping("/{idPelicula}")
+    public ResponseEntity<String> delete(@PathVariable("idPelicula") Integer eId) {
+        Boolean _response = service.delete(eId);
+        if (_response) return ResponseEntity.ok("Pelicula eliminado");
+        return new ResponseEntity<>("Error!!", HttpStatus.FAILED_DEPENDENCY);
+    }
+
+    @CrossOrigin
+    @GetMapping("/actor/{idActor}")
+    public ResponseEntity<List<Pelicula>> getByActorId(@PathVariable("idActor") Integer eId) {
+        return ResponseEntity.ok(service.getByActorId(eId));
+    }
+
+    @CrossOrigin
+    @GetMapping( "/titulo/{eTitulo}")
+    public ResponseEntity<List<Pelicula>> getByTitulo(@PathVariable("eTitulo") String eTitulo) {
+        return ResponseEntity.ok(service.getByTitulo(eTitulo));
+    }
+
+    @CrossOrigin
+    @GetMapping("/genero/{idGenero}")
+    public ResponseEntity<List<Pelicula>> getByGeneroId(@PathVariable("idGenero") Integer eId) {
+        return ResponseEntity.ok(service.getByGeneroId(eId));
     }
 }

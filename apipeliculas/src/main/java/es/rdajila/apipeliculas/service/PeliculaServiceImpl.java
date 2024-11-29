@@ -5,6 +5,7 @@ import es.rdajila.apipeliculas.dto.PeliculaDtoInput;
 import es.rdajila.apipeliculas.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -67,5 +68,60 @@ public class PeliculaServiceImpl implements IPeliculaService{
     @Override
     public List<Pelicula> getByActorId(Integer eActorId) {
         return peliculaDao.getAllByActorId(eActorId);
+    }
+
+    @Override
+    @Transactional
+    public Boolean update(PeliculaDtoInput ePeliculaInput) {
+        Director directorObj = directorDao.getById(ePeliculaInput.getIdDirector()).orElse(null);
+        Pais paisObj = paisDao.getById(ePeliculaInput.getIdPais());
+        Pelicula pelicula = peliculaDao.getById(ePeliculaInput.getId()).orElse(null);
+
+        if (directorObj != null && paisObj != null && pelicula != null) {
+            pelicula.setTitulo(ePeliculaInput.getTitulo());
+            pelicula.setAnio(ePeliculaInput.getAnio());
+            pelicula.setDuracion(ePeliculaInput.getDuracion());
+            pelicula.setSinopsis(ePeliculaInput.getSinopsis());
+            pelicula.setPortada(ePeliculaInput.getPortada());
+            pelicula.setCountry(paisObj);
+            pelicula.setDirectorp(directorObj);
+
+            // Eliminamos los actores y/o generos
+            pelicula.getActores().clear();
+            pelicula.getGeneros().clear();
+
+            // Agregamos los actores
+            ePeliculaInput.getlActores().forEach(id -> {
+                actorDao.getById(id).ifPresent(actorObj -> pelicula.getActores().add(actorObj));
+            });
+
+            // Agregamos los generos
+            ePeliculaInput.getlGeneros().forEach(id -> {
+                generoDao.getById(id).ifPresent(generoObj -> pelicula.getGeneros().add(generoObj));
+            });
+
+            return peliculaDao.save(pelicula).orElse(null) != null;
+        }
+
+        return false;
+    }
+
+    @Override
+    public Boolean delete(Integer eId) {
+        Pelicula peliculaObj = peliculaDao.getById(eId).orElse(null);
+        if (peliculaObj != null) {
+            return peliculaDao.delete(peliculaObj);
+        }
+        return false;
+    }
+
+    @Override
+    public List<Pelicula> getByTitulo(String eTitulo) {
+        return peliculaDao.getByTitulo(eTitulo);
+    }
+
+    @Override
+    public List<Pelicula> getByGeneroId(Integer eGeneroId) {
+        return peliculaDao.getByGeneroId(eGeneroId);
     }
 }

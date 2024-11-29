@@ -11,4 +11,8 @@ public interface IPeliculaDao {
     Optional<Pelicula> save(Pelicula ePelicula);
     List<Pelicula> getAllByActorList(List<Actor> eActores);
     List<Pelicula> getAllByActorId(Integer eActorId);
+    Optional<Pelicula> getById(Integer ePeliculaId);
+    Boolean delete(Pelicula ePelicula);
+    List<Pelicula> getByTitulo(String eTitulo);
+    List<Pelicula> getByGeneroId(Integer eGeneroId);
 }
