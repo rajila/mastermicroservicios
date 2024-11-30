@@ -15,4 +15,5 @@ public interface IPeliculaDao {
     Boolean delete(Pelicula ePelicula);
     List<Pelicula> getByTitulo(String eTitulo);
     List<Pelicula> getByGeneroId(Integer eGeneroId);
+    List<Pelicula> getByTituloOrGeneroIdOrAutorId(String eTitulo, Integer eGeneroId, Integer eAutorId);
 }

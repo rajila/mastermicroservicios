@@ -57,4 +57,9 @@ public class PeliculaDaoImpl implements IPeliculaDao{
     public List<Pelicula> getByGeneroId(Integer eGeneroId) {
         return repository.getByGeneroId(eGeneroId);
     }
+
+    @Override
+    public List<Pelicula> getByTituloOrGeneroIdOrAutorId(String eTitulo, Integer eGeneroId, Integer eAutorId) {
+        return repository.getByTituloOrGeneroIdOrAutorId(eTitulo, eGeneroId, eAutorId);
+    }
 }

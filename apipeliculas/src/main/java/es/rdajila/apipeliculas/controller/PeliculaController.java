@@ -67,4 +67,16 @@ public class PeliculaController {
     public ResponseEntity<List<Pelicula>> getByGeneroId(@PathVariable("idGenero") Integer eId) {
         return ResponseEntity.ok(service.getByGeneroId(eId));
     }
+
+    @CrossOrigin
+    @GetMapping({"/titulo/{eTitulo}/genero/{eGeneroId}/autor/{eActorId}"})
+    public ResponseEntity<List<Pelicula>> getByVarios(@PathVariable("eTitulo") String eTitulo, @PathVariable("eGeneroId") Integer eGeneroId, @PathVariable("eActorId") Integer eActorId) {
+        return ResponseEntity.ok(service.getByTituloOrGeneroIdOrAutorId(eTitulo, eGeneroId, eActorId));
+    }
+
+    @CrossOrigin
+    @GetMapping({ "/genero/{eGeneroId}/autor/{eActorId}"})
+    public ResponseEntity<List<Pelicula>> getByVariosV2(@PathVariable("eGeneroId") Integer eGeneroId, @PathVariable("eActorId") Integer eActorId) {
+        return ResponseEntity.ok(service.getByTituloOrGeneroIdOrAutorId("", eGeneroId, eActorId));
+    }
 }

@@ -13,4 +13,5 @@ public interface IPeliculaService {
     Boolean delete(Integer eId);
     List<Pelicula> getByTitulo(String eTitulo);
     List<Pelicula> getByGeneroId(Integer eGeneroId);
+    List<Pelicula> getByTituloOrGeneroIdOrAutorId(String eTitulo, Integer eGeneroId, Integer eAutorId);
 }

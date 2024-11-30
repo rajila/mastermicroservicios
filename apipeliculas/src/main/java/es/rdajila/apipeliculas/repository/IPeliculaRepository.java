@@ -1,6 +1,7 @@
 package es.rdajila.apipeliculas.repository;
 
 import es.rdajila.apipeliculas.model.Actor;
+import es.rdajila.apipeliculas.model.Genero;
 import es.rdajila.apipeliculas.model.Pelicula;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,4 +17,6 @@ public interface IPeliculaRepository extends JpaRepository<Pelicula, Integer> {
     List<Pelicula> findByTituloContainingIgnoreCase(String titulo);
     @Query("select p from Pelicula p join p.generos g where g.id = ?1")
     List<Pelicula> getByGeneroId(Integer eId);
+    @Query("select p from Pelicula p left join p.actores a left join p.generos g where (p.titulo like %?1% OR ?1 = '') AND (a.id = ?3 OR ?3 = 0) AND (g.id = ?2 OR ?2 = 0)")
+    List<Pelicula> getByTituloOrGeneroIdOrAutorId(String titulo, Integer generoId, Integer autorId);
 }

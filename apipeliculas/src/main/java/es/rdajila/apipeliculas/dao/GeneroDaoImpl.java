@@ -5,6 +5,7 @@ import es.rdajila.apipeliculas.repository.IGeneroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -19,5 +20,10 @@ public class GeneroDaoImpl implements IGeneroDao {
     @Override
     public Optional<Genero> getById(int eId) {
         return repository.findById(eId);
+    }
+
+    @Override
+    public List<Genero> getAll() {
+        return repository.findAll();
     }
 }

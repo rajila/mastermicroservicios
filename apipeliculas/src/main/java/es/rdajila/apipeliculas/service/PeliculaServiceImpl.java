@@ -124,4 +124,12 @@ public class PeliculaServiceImpl implements IPeliculaService{
     public List<Pelicula> getByGeneroId(Integer eGeneroId) {
         return peliculaDao.getByGeneroId(eGeneroId);
     }
+
+    @Override
+    public List<Pelicula> getByTituloOrGeneroIdOrAutorId(String eTitulo, Integer eGeneroId, Integer eAutorId) {
+        eTitulo = eTitulo == null ? "" : eTitulo;
+        eGeneroId = eGeneroId == null ? 0 : eGeneroId;
+        eAutorId = eAutorId == null ? 0 : eAutorId;
+        return peliculaDao.getByTituloOrGeneroIdOrAutorId(eTitulo, eGeneroId, eAutorId);
+    }
 }
