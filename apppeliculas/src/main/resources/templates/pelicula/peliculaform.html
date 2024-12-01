@@ -50,7 +50,7 @@
             <label for="idDirector" class="form-label">Director</label>
             <select class="form-select" th:field="*{idDirector}" name="idDirector" id="idDirector">
               <option value="0">Seleccionar director</option>
-              <option th:each="el : ${directorList}" th:value="${el.id}" th:text="${el.user.nombre}"></option>
+              <option th:each="el : ${directorList}" th:value="${el.id}" th:text="${el.user.nombre + ' ' + el.user.apellido}"></option>
             </select>
           </div>
           <div class="col mb-3">
@@ -83,14 +83,14 @@
                   <div class="input-group mb-3">
                       <select class="form-select" name="idActor" id="idActor">
                           <option value="0">Seleccionar actor</option>
-                          <option th:each="el : ${actorList}" th:value="${el.id}" th:text="${el.user.nombre}"></option>
+                          <option th:each="el : ${actorList}" th:value="${el.id}" th:text="${el.user.nombre + ' ' + el.user.apellido}"></option>
                       </select>
                       <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="addElement(this, 'idActor', 'contenedor-actor', 'idsActorStr');">Agregar</button>
                   </div>
 
                   <div id="contenedor-actor" class="row ldata px-4">
                       <p class="row w-auto rounded-4" th:each="el : ${dataCurrent.actores}" th:data-id="${el.id}">
-                          <span class="w-auto" th:text="${el.user.nombre}"></span>
+                          <span class="w-auto" th:text="${el.user.nombre + ' ' + el.user.apellido}"></span>
                           <span class="w-auto" th:data-id="${el.id}" onclick="deleteElement(this, 'contenedor-actor', 'idsActorStr');">X</span>
                       </p>
                   </div>

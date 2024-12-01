@@ -41,7 +41,7 @@
                     <div class="col mb-3">
                         <select class="form-select" th:field="*{autorId}" name="autorId">
                             <option value="0">Seleccionar actor</option>
-                            <option th:each="el : ${actorList}" th:value="${el.id}" th:text="${el.user.nombre}"></option>
+                            <option th:each="el : ${actorList}" th:value="${el.id}" th:text="${el.user.nombre + ' ' + el.user.apellido}"></option>
                         </select>
                     </div>
                     <div class="col mb-3">

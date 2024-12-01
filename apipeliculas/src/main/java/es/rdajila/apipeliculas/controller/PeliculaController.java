@@ -20,7 +20,6 @@ public class PeliculaController {
         this.service = service;
     }
 
-    @CrossOrigin
     @GetMapping({"", "/"})
     public ResponseEntity<List<Pelicula>> getAll() {
         return ResponseEntity.ok(service.getAll());
