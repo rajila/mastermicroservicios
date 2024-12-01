@@ -10,6 +10,9 @@ argfile*
 activemq-data/
 classes/
 
+apppeliculas/uploads/peliculas
+/apppeliculas/uploads/peliculas
+
 # Log files
 jxl.log
 jmx.log
