@@ -49,4 +49,11 @@ public class ActorController {
         if (_response) return ResponseEntity.ok("Actor eliminado");
         return new ResponseEntity<>("Error!!", HttpStatus.FAILED_DEPENDENCY);
     }
+    @CrossOrigin
+    @GetMapping({"/{eId}"})
+    public ResponseEntity<Actor> getById(@PathVariable("eId") Integer eId) {
+        Actor _data = service.getById(eId);
+        return (_data == null) ?
+                ResponseEntity.notFound().build() : ResponseEntity.ok(_data);
+    }
 }

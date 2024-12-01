@@ -1,7 +1,7 @@
 package es.rdajila.apppeliculas.controller;
 
-import es.rdajila.apppeliculas.dto.PeliculaFiltroIn;
-import es.rdajila.apppeliculas.dto.PeliculaIn;
+import es.rdajila.apppeliculas.dto.PeliculaFiltroDtoIn;
+import es.rdajila.apppeliculas.dto.PeliculaDtoIn;
 import es.rdajila.apppeliculas.model.*;
 import es.rdajila.apppeliculas.service.*;
 import org.modelmapper.ModelMapper;
@@ -49,7 +49,7 @@ public class PeliculaController {
         model.addAttribute("generoList", generoList);
         model.addAttribute("actorList", actorList);
 
-        PeliculaFiltroIn filtroCurrent = new PeliculaFiltroIn();
+        PeliculaFiltroDtoIn filtroCurrent = new PeliculaFiltroDtoIn();
         filtroCurrent.setTitulo("");
         filtroCurrent.setAutorId(0);
         filtroCurrent.setAutorId(0);
@@ -65,7 +65,7 @@ public class PeliculaController {
         model.addAttribute("generoList", generoList);
         model.addAttribute("actorList", actorList);
 
-        PeliculaFiltroIn filtroCurrent = new PeliculaFiltroIn();
+        PeliculaFiltroDtoIn filtroCurrent = new PeliculaFiltroDtoIn();
         filtroCurrent.setTitulo(titulo);
         filtroCurrent.setAutorId(autorId);
         filtroCurrent.setGeneroId(generoId);
@@ -95,7 +95,7 @@ public class PeliculaController {
         model.addAttribute("paisList", paisList);
         model.addAttribute("directorList", directorList);
 
-        PeliculaIn dataCurrent = new PeliculaIn();
+        PeliculaDtoIn dataCurrent = new PeliculaDtoIn();
         dataCurrent.setId(0);
         model.addAttribute("dataCurrent", dataCurrent);
         model.addAttribute("titulo", "Nueva pelicula");
@@ -116,12 +116,12 @@ public class PeliculaController {
         model.addAttribute("directorList", directorList);
 
         Pelicula _dataDb = peliculaService.getById(eId);
-        PeliculaIn dataCurrent = null;
+        PeliculaDtoIn dataCurrent = null;
 
         if (_dataDb != null) {
-            dataCurrent =  modelMapper.map(_dataDb, PeliculaIn.class);
+            dataCurrent =  modelMapper.map(_dataDb, PeliculaDtoIn.class);
             dataCurrent.init();
-        } else dataCurrent = new PeliculaIn();
+        } else dataCurrent = new PeliculaDtoIn();
 
         model.addAttribute("dataCurrent", dataCurrent);
         model.addAttribute("titulo", "Editar pelicula");
@@ -130,7 +130,7 @@ public class PeliculaController {
     }
 
     @PostMapping("/save")
-    public String save(Model model, PeliculaIn data, RedirectAttributes attributes) {
+    public String save(Model model, PeliculaDtoIn data, RedirectAttributes attributes) {
         peliculaService.save(data);
         attributes.addFlashAttribute("msg", "Los datos de la pelicula fueron guardados!");
         return "redirect:/peliculas";

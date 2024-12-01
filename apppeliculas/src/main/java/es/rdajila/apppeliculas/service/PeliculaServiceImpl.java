@@ -1,7 +1,7 @@
 package es.rdajila.apppeliculas.service;
 
-import es.rdajila.apppeliculas.dto.PeliculaFiltroIn;
-import es.rdajila.apppeliculas.dto.PeliculaIn;
+import es.rdajila.apppeliculas.dto.PeliculaFiltroDtoIn;
+import es.rdajila.apppeliculas.dto.PeliculaDtoIn;
 import es.rdajila.apppeliculas.model.Pelicula;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,7 +33,7 @@ public class PeliculaServiceImpl implements IPeliculaService{
     }
 
     @Override
-    public List<Pelicula> getAllByFiltro(PeliculaFiltroIn eFiltro) {
+    public List<Pelicula> getAllByFiltro(PeliculaFiltroDtoIn eFiltro) {
         String _url = url;
         if (eFiltro.getTitulo().compareTo("")==0) {
             _url += "/genero/"+eFiltro.getGeneroId()+"/autor/"+eFiltro.getAutorId();
@@ -51,7 +51,7 @@ public class PeliculaServiceImpl implements IPeliculaService{
     }
 
     @Override
-    public void save(PeliculaIn ePelicula) {
+    public void save(PeliculaDtoIn ePelicula) {
         ePelicula.preSave();
         if (ePelicula.getId() != null && ePelicula.getId() > 0) {
             template.put(url, ePelicula);

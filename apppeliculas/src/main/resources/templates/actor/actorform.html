@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Aplicación de gestión de peliculas</title>
+  <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+  <link th:href="@{/css/style.css}" rel="stylesheet">
+  <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/util.js}"></script>
+</head>
+<body>
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Renta de peliculas</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="container collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a th:href="@{/peliculas}" th:text="'Peliculas'" class="nav-link active" aria-current="page" href="#"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/actores}" th:text="'Actores'" class="nav-link active" aria-current="page" href="#">Actores</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+  <div th:if="${msg != null}" class='alert alert-success' th:text="${msg}" role='alert'></div>
+    <br/>
+  <div>
+      <h3 th:text="${titulo}"></h3>
+      <hr/>
+      <form th:action="@{/actores/save}" method="post" th:object="${dataCurrent}">
+          <div class="col mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input class="form-control" name="nombre" id="nombre" type="text" th:field="*{nombre}" placeholder="Ingresar nombre"  />
+          </div>
+          <div class="col mb-3">
+            <label for="apellido" class="form-label">Apellido</label>
+            <input class="form-control" name="apellido" id="apellido" type="text" th:field="*{apellido}" placeholder="Ingresar apellido"  />
+          </div>
+          <div class="col mb-3">
+            <label for="fechanacimiento" class="form-label">Fecha nacimiento</label>
+            <input class="form-control" name="fechanacimiento" id="fechanacimiento" type="date" th:field="*{fechanacimiento}"  />
+          </div>
+          <div class="col mb-3">
+            <label for="idPais" class="form-label">Pais</label>
+            <select class="form-select" th:field="*{idPais}" name="idPais" id="idPais">
+              <option value="0">Seleccionar pais</option>
+              <option th:each="el : ${paisList}" th:value="${el.id}" th:text="${el.nombre}"></option>
+            </select>
+          </div>
+          <div class="text-center">
+              <a th:href="@{/actores   }" th:text="'Atras'" class="btn btn-danger btn-sm" role="button" title="Atras">
+                  <i class="fas fa-trash" aria-hidden="true"></i></a>
+              <button type="submit" class="btn btn-dark btn-sm">Guardar</button>
+          </div>
+          <input name="id" id="id" type="hidden" th:field="*{id}"  />
+      </form>
+  </div>
+</div>
+</body>
+</html>

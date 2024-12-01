@@ -22,7 +22,7 @@
                         <a th:href="@{/peliculas}" th:text="'Peliculas'" class="nav-link active" aria-current="page" href="#"></a>
                     </li>
                     <li class="nav-item">
-                        <a th:href="@{/peliculas}" th:text="'Actores'" class="nav-link active" aria-current="page" href="#">Actores</a>
+                        <a th:href="@{/actores}" th:text="'Actores'" class="nav-link active" aria-current="page" href="#">Actores</a>
                     </li>
                 </ul>
             </div>
@@ -65,6 +65,7 @@
     </div>
     <hr />
     <div class="row justify-content-between justify-content-evenly">
+        <h3 style="margin-bottom: 25px;">Listado de peliculas</h3>
         <div class="card card_custom" th:each="el : ${dataList}">
             <div class="card-body justify-content-center">
                 <div class="flex-column">

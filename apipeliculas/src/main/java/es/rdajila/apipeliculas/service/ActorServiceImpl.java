@@ -84,4 +84,9 @@ public class ActorServiceImpl implements IActorService{
         }
         return false;
     }
+
+    @Override
+    public Actor getById(Integer eId) {
+        return actorDao.getById(eId).orElse(null);
+    }
 }

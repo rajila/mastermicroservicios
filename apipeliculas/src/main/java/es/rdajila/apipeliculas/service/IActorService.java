@@ -10,4 +10,5 @@ public interface IActorService {
     Boolean create(ActorDtoInput eActorInput);
     Boolean update(ActorDtoInput eActorInput);
     Boolean delete(Integer eId);
+    Actor getById(Integer eId);
 }

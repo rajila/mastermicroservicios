@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class PeliculaIn extends Pelicula {
+public class PeliculaDtoIn extends Pelicula {
     private String idsActorStr;
     private String idsGeneroStr;
     private Integer idPais;

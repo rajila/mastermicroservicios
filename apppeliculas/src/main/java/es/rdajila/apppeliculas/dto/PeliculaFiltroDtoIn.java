@@ -1,6 +1,6 @@
 package es.rdajila.apppeliculas.dto;
 
-public class PeliculaFiltroIn {
+public class PeliculaFiltroDtoIn {
     private String titulo;
     private Integer autorId;
     private Integer generoId;
