@@ -14,7 +14,7 @@ import java.util.List;
 public class PeliculaServiceImpl implements IPeliculaService{
     private final RestTemplate template;
 
-    String url = "http://localhost:6666/api/peliculas";
+    String url = "http://localhost:8081/api/peliculas";
 
     @Autowired
     public PeliculaServiceImpl(RestTemplate template) {

@@ -38,7 +38,11 @@ public class ActorServiceImpl implements IActorService{
 
     @Override
     public Boolean create(ActorDtoInput eActorInput) {
-        Usuario result = usuarioDao.save(new Usuario(null, eActorInput.getNombre(), eActorInput.getApellido()));
+        Usuario _user = new Usuario();
+        _user.setId(null);
+        _user.setNombre(eActorInput.getNombre());
+        _user.setApellido(eActorInput.getApellido());
+        Usuario result = usuarioDao.save(_user);
         if (result != null) {
             Pais paisObj = paisDao.getById(eActorInput.getIdPais());
             Actor actor = new Actor();

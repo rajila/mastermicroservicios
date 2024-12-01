@@ -12,7 +12,7 @@ import java.util.List;
 public class PaisServiceImpl implements IPaisService{
     private final RestTemplate template;
 
-    String url = "http://localhost:6666/api/paises";
+    String url = "http://localhost:8081/api/paises";
 
     @Autowired
     public PaisServiceImpl(RestTemplate template) {

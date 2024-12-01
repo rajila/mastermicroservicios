@@ -12,7 +12,7 @@ import java.util.List;
 public class GeneroServiceImpl implements IGeneroService{
     private final RestTemplate template;
 
-    String url = "http://localhost:6666/api/generos";
+    String url = "http://localhost:8081/api/generos";
 
     @Autowired
     public GeneroServiceImpl(RestTemplate template) {

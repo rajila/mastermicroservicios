@@ -12,7 +12,7 @@ import java.util.List;
 public class DirectorServiceImpl implements IDirectorService{
     private final RestTemplate template;
 
-    String url = "http://localhost:6666/api/directores";
+    String url = "http://localhost:8081/api/directores";
 
     @Autowired
     public DirectorServiceImpl(RestTemplate template) {
