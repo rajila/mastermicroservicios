@@ -79,4 +79,12 @@ public class PeliculaController {
     public ResponseEntity<List<Pelicula>> getByVariosV2(@PathVariable("eGeneroId") Integer eGeneroId, @PathVariable("eActorId") Integer eActorId) {
         return ResponseEntity.ok(service.getByTituloOrGeneroIdOrAutorId("", eGeneroId, eActorId));
     }
+
+    @CrossOrigin
+    @GetMapping({"/{eId}"})
+    public ResponseEntity<Pelicula> getById(@PathVariable("eId") Integer eId) {
+        Pelicula _pelicula = service.getById(eId);
+        return (_pelicula == null) ?
+                ResponseEntity.notFound().build() : ResponseEntity.ok(_pelicula);
+    }
 }

@@ -14,4 +14,5 @@ public interface IPeliculaService {
     List<Pelicula> getByTitulo(String eTitulo);
     List<Pelicula> getByGeneroId(Integer eGeneroId);
     List<Pelicula> getByTituloOrGeneroIdOrAutorId(String eTitulo, Integer eGeneroId, Integer eAutorId);
+    Pelicula getById(Integer eId);
 }

@@ -1,6 +1,7 @@
 package es.rdajila.apppeliculas.service;
 
 import es.rdajila.apppeliculas.dto.PeliculaFiltroIn;
+import es.rdajila.apppeliculas.dto.PeliculaIn;
 import es.rdajila.apppeliculas.model.Pelicula;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,5 +43,21 @@ public class PeliculaServiceImpl implements IPeliculaService{
 
         Pelicula[] peliculas = template.getForObject(_url, Pelicula[].class);
         return peliculas != null ? Arrays.asList(peliculas) : List.of();
+    }
+
+    @Override
+    public Pelicula getById(Integer eId) {
+        return template.getForObject(url + "/" + eId, Pelicula.class);
+    }
+
+    @Override
+    public void save(PeliculaIn ePelicula) {
+        ePelicula.preSave();
+        if (ePelicula.getId() != null && ePelicula.getId() > 0) {
+            template.put(url, ePelicula);
+        } else {
+            ePelicula.setId(0);
+            template.postForObject(url, ePelicula, String.class);
+        }
     }
 }

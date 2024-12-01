@@ -2,6 +2,9 @@ package es.rdajila.apipeliculas.dao;
 
 import es.rdajila.apipeliculas.model.Pais;
 
+import java.util.List;
+
 public interface IPaisDao {
-    public Pais getById(Integer eId);
+    Pais getById(Integer eId);
+    List<Pais> getAll();
 }

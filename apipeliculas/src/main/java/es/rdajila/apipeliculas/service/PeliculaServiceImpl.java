@@ -132,4 +132,9 @@ public class PeliculaServiceImpl implements IPeliculaService{
         eAutorId = eAutorId == null ? 0 : eAutorId;
         return peliculaDao.getByTituloOrGeneroIdOrAutorId(eTitulo, eGeneroId, eAutorId);
     }
+
+    @Override
+    public Pelicula getById(Integer eId) {
+        return peliculaDao.getById(eId).orElse(null);
+    }
 }

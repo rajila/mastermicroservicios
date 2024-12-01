@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Aplicación de gestión de peliculas</title>
+  <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+  <link th:href="@{/css/style.css}" rel="stylesheet">
+  <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/util.js}"></script>
+</head>
+<body>
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Renta de peliculas</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="container collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a th:href="@{/peliculas}" th:text="'Peliculas'" class="nav-link active" aria-current="page" href="#"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/peliculas}" th:text="'Actores'" class="nav-link active" aria-current="page" href="#">Actores</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+  <div th:if="${msg != null}" class='alert alert-success' th:text="${msg}" role='alert'></div>
+    <br/>
+  <div>
+      <h3 th:text="${titulo}"></h3>
+      <hr/>
+      <form th:action="@{/peliculas/save}" method="post" th:object="${dataCurrent}">
+          <div class="col mb-3">
+            <label for="titulo" class="form-label">Titulo</label>
+            <input class="form-control" name="titulo" id="titulo" type="text" th:field="*{titulo}" placeholder="Ingresar titulo"  />
+          </div>
+          <div class="col mb-3">
+            <label for="anio" class="form-label">Año</label>
+            <input class="form-control" name="anio" id="anio" type="number" th:field="*{anio}" placeholder="Ingresar anio"  />
+          </div>
+          <div class="col mb-3">
+            <label for="duracion" class="form-label">Duración</label>
+            <input class="form-control" name="duracion" id="duracion" type="number" th:field="*{duracion}" placeholder="Ingresar duracion en min"  />
+          </div>
+          <div class="col mb-3">
+            <label for="idDirector" class="form-label">Director</label>
+            <select class="form-select" th:field="*{idDirector}" name="idDirector" id="idDirector">
+              <option value="0">Seleccionar director</option>
+              <option th:each="el : ${directorList}" th:value="${el.id}" th:text="${el.user.nombre}"></option>
+            </select>
+          </div>
+          <div class="col mb-3">
+            <label for="idPais" class="form-label">Pais</label>
+            <select class="form-select" th:field="*{idPais}" name="idPais" id="idPais">
+              <option value="0">Seleccionar pais</option>
+              <option th:each="el : ${paisList}" th:value="${el.id}" th:text="${el.nombre}"></option>
+            </select>
+          </div>
+
+          <div class="col mb-3">
+              <fieldset class="pelicula rounded-2 px-3 py-2">
+                  <legend class="float-none w-auto px-2"><label for="idActor" class="form-label">Actores</label></legend>
+                  <div class="input-group mb-3">
+                      <select class="form-select" name="idActor" id="idActor">
+                          <option value="0">Seleccionar actor</option>
+                          <option th:each="el : ${actorList}" th:value="${el.id}" th:text="${el.user.nombre}"></option>
+                      </select>
+                      <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="addElement(this, 'idActor', 'contenedor-actor', 'idsActorStr');">Agregar</button>
+                  </div>
+
+                  <div id="contenedor-actor" class="row ldata px-4">
+                      <p class="row w-auto rounded-4" th:each="el : ${dataCurrent.actores}" th:data-id="${el.id}">
+                          <span class="w-auto" th:text="${el.user.nombre}"></span>
+                          <span class="w-auto" th:data-id="${el.id}" onclick="deleteElement(this, 'contenedor-actor', 'idsActorStr');">X</span>
+                      </p>
+                  </div>
+              </fieldset>
+          </div>
+          <div class="col mb-3">
+              <fieldset class="pelicula rounded-2 px-3 py-2">
+                  <legend class="float-none w-auto px-2"><label for="idGenero" class="form-label">Generos</label></legend>
+                  <div class="input-group mb-3">
+                      <select class="form-select" name="idActor" id="idGenero">
+                          <option value="0">Seleccionar genero</option>
+                          <option th:each="el : ${generoList}" th:value="${el.id}" th:text="${el.nombre}"></option>
+                      </select>
+                      <button class="btn btn-outline-secondary" type="button" onclick="addElement(this, 'idGenero', 'contenedor-genero', 'idsGeneroStr');">Agregar</button>
+                  </div>
+
+                  <div id="contenedor-genero" class="row ldata px-4">
+                      <p class="row w-auto rounded-4" th:each="el : ${dataCurrent.generos}" th:data-id="${el.id}">
+                          <span class="w-auto" th:text="${el.nombre}"></span>
+                          <span class="w-auto" th:data-id="${el.id}" onclick="deleteElement(this, 'contenedor-genero', 'idsGeneroStr');">X</span>
+                      </p>
+                  </div>
+              </fieldset>
+          </div>
+          <div class="col mb-3">
+              <label for="sinopsis" class="form-label">Sinopsis</label>
+              <textarea class="form-control" name="sinopsis" id="sinopsis" type="number" th:field="*{sinopsis}" placeholder="Ingresar sinopsis"></textarea>
+          </div>
+          <div class="text-center">
+              <a th:href="@{/peliculas   }" th:text="'Atras'" class="btn btn-danger btn-sm" role="button" title="Atras">
+                  <i class="fas fa-trash" aria-hidden="true"></i></a>
+              <button type="submit" class="btn btn-dark btn-sm">Guardar</button>
+          </div>
+          <input name="idsActorStr" id="idsActorStr" type="hidden" th:field="*{idsActorStr}"  />
+          <input name="idsGeneroStr" id="idsGeneroStr" type="hidden" th:field="*{idsGeneroStr}"  />
+          <input name="id" id="id" type="hidden" th:field="*{id}"  />
+      </form>
+  </div>
+</div>
+</body>
+</html>

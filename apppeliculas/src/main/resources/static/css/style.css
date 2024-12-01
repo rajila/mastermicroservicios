@@ -11,11 +11,27 @@
     border: 1px solid var(--bs-gray-dark) !important;
 }
 
-fieldset.filtro {
+fieldset.filtro, fieldset.pelicula {
     border: 1px solid var(--bs-gray-500, black) !important;
     margin-bottom: 20px;
 }
 
 fieldset.filtro legend{
     font-size: 20px;
+}
+
+fieldset.pelicula legend{
+    font-size: 16px;
+}
+
+
+.ldata {
+    margin-top: 15px;
+}
+
+.ldata p {
+    margin-right: 18px;
+    background: darkblue;
+    color: white;
+    font-weight: bold;
 }
