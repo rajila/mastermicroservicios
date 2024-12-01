@@ -4,13 +4,20 @@ import es.rdajila.apppeliculas.dto.PeliculaFiltroDtoIn;
 import es.rdajila.apppeliculas.dto.PeliculaDtoIn;
 import es.rdajila.apppeliculas.model.*;
 import es.rdajila.apppeliculas.service.*;
+import es.rdajila.apppeliculas.util.IUploadFileService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.core.io.Resource;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.List;
 
 @Controller
@@ -22,6 +29,8 @@ public class PeliculaController {
     private final IPaisService paisService;
     private final IDirectorService directorService;
     private final ModelMapper modelMapper;
+    private IUploadFileService uploadFileService;
+
 
     @Autowired
     public PeliculaController(IPeliculaService peliculaService,
@@ -29,13 +38,15 @@ public class PeliculaController {
                               IActorService actorService,
                               IDirectorService directorService,
                               IPaisService paisService,
-                              ModelMapper modelMapper) {
+                              ModelMapper modelMapper,
+                              IUploadFileService uploadFileService) {
         this.peliculaService = peliculaService;
         this.generoService = generoService;
         this.actorService = actorService;
         this.directorService = directorService;
         this.paisService = paisService;
         this.modelMapper = modelMapper;
+        this.uploadFileService = uploadFileService;
     }
 
     @GetMapping(value={"/", "", "/search", "/search/"})
@@ -97,6 +108,7 @@ public class PeliculaController {
 
         PeliculaDtoIn dataCurrent = new PeliculaDtoIn();
         dataCurrent.setId(0);
+        dataCurrent.setPortada("");
         model.addAttribute("dataCurrent", dataCurrent);
         model.addAttribute("titulo", "Nueva pelicula");
 
@@ -130,9 +142,42 @@ public class PeliculaController {
     }
 
     @PostMapping("/save")
-    public String save(Model model, PeliculaDtoIn data, RedirectAttributes attributes) {
+    public String save(Model model, PeliculaDtoIn data, @RequestParam("file") MultipartFile portada, RedirectAttributes attributes) {
+        if (!portada.isEmpty()) {
+            if (data.getId() != null && data.getId() > 0 && data.getPortada() != null
+                    && data.getPortada().length() > 0) {
+                uploadFileService.delete(data.getPortada());
+            }
+
+            String uniqueFilename = null;
+            try {
+                uniqueFilename = uploadFileService.copy(portada);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            data.setPortada(uniqueFilename);
+        }
+
         peliculaService.save(data);
         attributes.addFlashAttribute("msg", "Los datos de la pelicula fueron guardados!");
         return "redirect:/peliculas";
+    }
+
+    @GetMapping("/uploads/{filename:.+}")
+    public ResponseEntity<Resource> loadPortada(@PathVariable String filename) {
+        Resource recurso = null;
+        String path = "";
+        try {
+            recurso = uploadFileService.load(filename);
+        }   catch (Exception e) {
+            e.printStackTrace();
+            try {
+                recurso = uploadFileService.load("portadaNo.jpg");
+            } catch(Exception ex) {}
+        }
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + recurso.getFilename() + "\"")
+                .body(recurso);
     }
 }

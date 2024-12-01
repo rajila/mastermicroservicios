@@ -71,7 +71,10 @@
                 <div class="flex-column">
                     <h6 th:text="${el.titulo}"></h6>
                     <div class="portada">
-                        <img class="img_portada" alt="No Disponible" th:src="@{/img/portadaNo.jpg}" />
+<!--                        <img class="img_portada" alt="No Disponible" th:src="@{/img/portadaNo.jpg}" />-->
+                        <img th:class="img_portada"
+                             th:src="@{'/peliculas/uploads/' +  ${(el.portada.toString().trim().isEmpty()?'portadaNo.jpg':el.portada)}}"
+                             th:alt="${el.portada}" />
                     </div>
                     <div class="data justify-content-end">
                         <p class="align-content-end" th:text="${el.duracion.toString() + ' min'}"></p>

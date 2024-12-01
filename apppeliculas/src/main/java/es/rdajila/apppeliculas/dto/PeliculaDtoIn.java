@@ -64,7 +64,6 @@ public class PeliculaDtoIn extends Pelicula {
     }
 
     public void init(){
-        this.setPortada("/uploads/test.png");
         this.idDirector = this.getDirectorp().getId();
         this.idPais = this.getCountry().getId();
         this.idsGeneroStr = this.getGeneros() .stream().map(el -> el.getId().toString()).collect(Collectors.joining("|"));
@@ -72,7 +71,6 @@ public class PeliculaDtoIn extends Pelicula {
     }
 
     public void preSave() {
-        this.setPortada("/uploads/test.png");
         if(!this.idsActorStr.trim().isEmpty()){
             Arrays.stream(this.idsActorStr.split("\\|")).forEach(el -> {
                 this.lActores.add(Integer.parseInt(el));

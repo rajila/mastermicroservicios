@@ -33,7 +33,7 @@
   <div>
       <h3 th:text="${titulo}"></h3>
       <hr/>
-      <form th:action="@{/peliculas/save}" method="post" th:object="${dataCurrent}">
+      <form th:action="@{/peliculas/save}" method="post" th:object="${dataCurrent}" enctype="multipart/form-data">
           <div class="col mb-3">
             <label for="titulo" class="form-label">Titulo</label>
             <input class="form-control" name="titulo" id="titulo" type="text" th:field="*{titulo}" placeholder="Ingresar titulo"  />
@@ -60,6 +60,22 @@
               <option th:each="el : ${paisList}" th:value="${el.id}" th:text="${el.nombre}"></option>
             </select>
           </div>
+
+          <div class="col mb-3">
+              <fieldset class="pelicula rounded-2 px-3 py-2">
+                  <legend class="float-none w-auto px-2"><label class="form-label">Portada</label></legend>
+                  <img th:class="img_portada" th:if="${dataCurrent.id != null && dataCurrent.id > 0}"
+                       th:src="@{'/peliculas/uploads/' + ${(dataCurrent.portada.toString().trim().isEmpty()?'portadaNo.jpg':dataCurrent.portada)}}"
+                       th:alt="${dataCurrent.portada}" />
+                  <div class="mb-3 py-2">
+                      <div class="col-sm-6">
+                          <input type="file" id="file" name="file" class="form-control"/>
+                      </div>
+                  </div>
+              </fieldset>
+          </div>
+
+
 
           <div class="col mb-3">
               <fieldset class="pelicula rounded-2 px-3 py-2">
@@ -111,6 +127,7 @@
           <input name="idsActorStr" id="idsActorStr" type="hidden" th:field="*{idsActorStr}"  />
           <input name="idsGeneroStr" id="idsGeneroStr" type="hidden" th:field="*{idsGeneroStr}"  />
           <input name="id" id="id" type="hidden" th:field="*{id}"  />
+          <input type="hidden" th:field="*{portada}"/>
       </form>
   </div>
 </div>
