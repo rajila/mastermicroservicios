@@ -64,9 +64,7 @@
           <div class="col mb-3">
               <fieldset class="pelicula rounded-2 px-3 py-2">
                   <legend class="float-none w-auto px-2"><label class="form-label">Portada</label></legend>
-                  <img th:class="img_portada" th:if="${dataCurrent.id != null && dataCurrent.id > 0}"
-                       th:src="@{'/peliculas/uploads/' + ${(dataCurrent.portada.toString().trim().isEmpty()?'portadaNo.jpg':dataCurrent.portada)}}"
-                       th:alt="${dataCurrent.portada}" />
+                  <img th:class="img_portada" th:src="|data:image;base64,*{portada}|" th:alt="Portada" class="product-image">
                   <div class="mb-3 py-2">
                       <div class="col-sm-6">
                           <input type="file" id="file" name="file" class="form-control"/>

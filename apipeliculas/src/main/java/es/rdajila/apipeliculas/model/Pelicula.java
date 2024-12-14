@@ -25,7 +25,7 @@ public class Pelicula {
     @Column(name = "sinopsis", nullable = false, length = 500)
     private String sinopsis;
 
-    @Column(name = "portada", nullable = false, length = 250)
+    @Column(name = "portada", nullable = false)
     private String portada;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -45,6 +45,18 @@ public class Pelicula {
     @JoinTable(name = "tbl_pelicula_genero", joinColumns = @JoinColumn(name = "id_pelicula", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "id_genero", referencedColumnName = "id"))
     private List<Genero> generos = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_documento")
+    private Documento documento;
+
+    public Documento getDocumento() {
+        return documento;
+    }
+
+    public void setDocumento(Documento documento) {
+        this.documento = documento;
+    }
 
     public Pais getCountry() {
         return country;
