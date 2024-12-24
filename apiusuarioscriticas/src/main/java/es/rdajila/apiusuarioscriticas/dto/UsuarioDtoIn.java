@@ -7,8 +7,26 @@ public class UsuarioDtoIn {
     private String correo;
     private String password;
     private String base64;
+    private String tipoDocumento;
+    private String tipoOrigenDocumento;
     private Integer documentoId;
     private Integer rolId;
+
+    public String getTipoDocumento() {
+        return tipoDocumento;
+    }
+
+    public void setTipoDocumento(String tipoDocumento) {
+        this.tipoDocumento = tipoDocumento;
+    }
+
+    public String getTipoOrigenDocumento() {
+        return tipoOrigenDocumento;
+    }
+
+    public void setTipoOrigenDocumento(String tipoOrigenDocumento) {
+        this.tipoOrigenDocumento = tipoOrigenDocumento;
+    }
 
     public String getApellido() {
         return apellido;
