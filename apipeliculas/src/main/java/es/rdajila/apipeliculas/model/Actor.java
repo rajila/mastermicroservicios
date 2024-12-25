@@ -16,15 +16,32 @@ public class Actor {
     @JoinColumn(name = "id_pais", referencedColumnName = "id", nullable = false)
     private Pais country;
 
-    @MapsId
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id", referencedColumnName = "id", nullable = false)
-    private Usuario user;
-
     @Column(name = "fechanacimiento", nullable = false)
     @JsonFormat(pattern="yyyy-MM-dd", locale = "es-ES", timezone = "Europe/Madrid")
     @Temporal(TemporalType.DATE)
     private Date fechanacimiento;
+
+    @Transient
+    private String nombre;
+
+    @Transient
+    private String apellido;
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
     public Date getFechanacimiento() {
         return fechanacimiento;
@@ -32,14 +49,6 @@ public class Actor {
 
     public void setFechanacimiento(Date fechanacimiento) {
         this.fechanacimiento = fechanacimiento;
-    }
-
-    public Usuario getUser() {
-        return user;
-    }
-
-    public void setUser(Usuario user) {
-        this.user = user;
     }
 
     public Pais getCountry() {
