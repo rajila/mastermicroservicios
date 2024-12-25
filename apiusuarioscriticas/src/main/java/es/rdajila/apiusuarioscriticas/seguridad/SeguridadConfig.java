@@ -20,6 +20,7 @@ public class SeguridadConfig {
                 .csrf().disable()
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/api/usuarios/**").permitAll()
+                        .requestMatchers("/api/roles/**").permitAll()
                         .requestMatchers("/api/documentos/**").permitAll()
                         .anyRequest().authenticated()
                 )

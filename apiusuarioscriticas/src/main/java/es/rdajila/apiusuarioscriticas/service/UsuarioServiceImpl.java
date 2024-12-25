@@ -31,6 +31,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
     @Override
     public ResponseHelper create(UsuarioDtoIn eUsuario) {
         ResponseHelper _result = new ResponseHelper();
+        eUsuario.setId(null);
         validate(eUsuario, _result, true);
         if (_result.getStatus().compareTo(ConstantsHelper.SUCCESS) == 0) {
             save(eUsuario, _result);
@@ -79,6 +80,10 @@ public class UsuarioServiceImpl implements IUsuarioService {
                 _result.getErrors().add(new ErrorHelper("entity","No existe la entidad de usuario!"));
                 return;
             }
+            // Si password es null o vacio, se toma la actual
+            if (eEntDao.getPassword() == null || eEntDao.getPassword().isEmpty()) {
+                eEntDao.setPassword(dbUsuario.getPassword());
+            }
         }
 
         // Validate rol
@@ -113,6 +118,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
         eUsuarioTarget.setApellido(eUsuarioSource.getApellido().trim());
         eUsuarioTarget.setCorreo(eUsuarioSource.getCorreo().trim());
         eUsuarioTarget.setPassword(eUsuarioSource.getPassword().trim());
+        eUsuarioTarget.setEstado(eUsuarioSource.getEstado());
         eUsuarioTarget.getRoles().add(dbRol);
         eUsuarioTarget.setDocumento(dbDoc);
     }
@@ -120,7 +126,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
     private void save(UsuarioDtoIn eUsuario, ResponseHelper _result) {
         ResponseHelper _resultSaveDoc = getDocumento(eUsuario);
         if(_resultSaveDoc.getStatus().equals(ConstantsHelper.SUCCESS)) {
-            Usuario _userOK = usuarioDao.getById(eUsuario.getId()).orElse(new Usuario());
+            Usuario _userOK = usuarioDao.getById(eUsuario.getId() != null ? eUsuario.getId() : 0).orElse(new Usuario());
             eUsuario.setDocumentoId(_resultSaveDoc.getIdData());
             mapingUsuario(eUsuario, _userOK);
             Usuario dbUsuario = usuarioDao.save(_userOK);

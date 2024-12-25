@@ -20,4 +20,9 @@ public class RolDaoImpl implements IRolDao{
     public Optional<Rol> getById(int eId) {
         return repository.findById(eId);
     }
+
+    @Override
+    public Rol getByCode(String eCode) {
+        return repository.findByCodigo(eCode);
+    }
 }

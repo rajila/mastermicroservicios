@@ -21,6 +21,7 @@ public class DocumentoServiceImpl implements IDocumentoService{
     @Transactional
     public ResponseHelper create(Documento eDocumento) {
         ResponseHelper _result = new ResponseHelper();
+        eDocumento.setId(null);
         validate(eDocumento, _result, true);
         save(eDocumento, _result);
         return _result;

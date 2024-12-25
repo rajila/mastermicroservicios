@@ -11,6 +11,15 @@ public class UsuarioDtoIn {
     private String tipoOrigenDocumento;
     private Integer documentoId;
     private Integer rolId;
+    private Integer estado;
+
+    public Integer getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Integer estado) {
+        this.estado = estado;
+    }
 
     public String getTipoDocumento() {
         return tipoDocumento;
