@@ -65,8 +65,8 @@ public class ActorController {
 
         if (_dataDb != null) {
             dataCurrent =  modelMapper.map(_dataDb, ActorDtoIn.class);
-            dataCurrent.setNombre(_dataDb.getUser().getNombre());
-            dataCurrent.setApellido(_dataDb.getUser().getApellido());
+            dataCurrent.setNombre(_dataDb.getNombre());
+            dataCurrent.setApellido(_dataDb.getApellido());
             dataCurrent.setIdPais(_dataDb.getCountry().getId());
         } else dataCurrent = new ActorDtoIn();
 

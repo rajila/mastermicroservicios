@@ -102,8 +102,7 @@ public class Pelicula {
 
     public String getAutorStr() {
         return this.actores.stream().map(el -> {
-            Usuario _user = el.getUser();
-            return _user != null ? _user.getNombre() + " " + _user.getApellido() : "";
+            return el.getNombre() + " " + el.getApellido();
         }).collect(Collectors.joining(" | "));
     }
 }

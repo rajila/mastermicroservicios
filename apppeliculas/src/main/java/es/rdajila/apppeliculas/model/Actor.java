@@ -7,9 +7,26 @@ import java.util.Date;
 public class Actor {
     private Integer id;
     private Pais country;
-    private Usuario user;
+    private String nombre;
+    private String apellido;
     @JsonFormat(pattern="yyyy-MM-dd", locale = "es-ES", timezone = "Europe/Madrid")
     private Date fechanacimiento;
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
     public Pais getCountry() {
         return country;
@@ -33,13 +50,5 @@ public class Actor {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Usuario getUser() {
-        return user;
-    }
-
-    public void setUser(Usuario user) {
-        this.user = user;
     }
 }

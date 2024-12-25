@@ -46,7 +46,7 @@
                         <img class="img_portada" alt="No Disponible" th:src="@{/img/actor.jpg}" />
                     </div>
                     <div class="data justify-content-end">
-                        <p th:text="${el.user.nombre + ' ' + el.user.apellido}"></p>
+                        <p th:text="${el.nombre + ' ' + el.apellido}"></p>
                         <p th:text="${#dates.format(el.fechanacimiento, 'dd/MMMM/yyyy')}"></p>
                         <p th:text="${el.country.nombre}"></p>
                         <a th:href="@{/actores/editar/{id}  (id=${el.id})  }" th:text="'Editar'" class="btn btn-success btn-sm" role="button" title="Editar el pelicula.">
