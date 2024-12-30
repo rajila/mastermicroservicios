@@ -4,4 +4,5 @@ import es.rdajila.apiusuarioscriticas.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IUsuarioRepository extends JpaRepository<Usuario, Integer> {
+    Usuario findByCorreoAndEstado(String eEmail, Integer eEstado);
 }

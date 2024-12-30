@@ -37,4 +37,10 @@ public class UsuarioDaoImpl implements IUsuarioDao{
         repository.deleteById(eId);
         return true;
     }
+
+    @Override
+    public Usuario getByCorreoAndEstado(String eCorreo, Integer eEstado) {
+        return repository.findByCorreoAndEstado(eCorreo, eEstado);
+    }
+
 }

@@ -10,4 +10,5 @@ public interface IUsuarioDao {
     Optional<Usuario> getById(int eId);
     List<Usuario> getAll();
     Boolean delete(Integer eId);
+    Usuario getByCorreoAndEstado(String eCorreo, Integer eEstado);
 }

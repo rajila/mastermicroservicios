@@ -137,4 +137,9 @@ public class UsuarioServiceImpl implements IUsuarioService {
             _result.getErrors().addAll(_resultSaveDoc.getErrors());
         }
     }
+
+    @Override
+    public Usuario getByCorreoAndEstado(String eCorreo, Integer eEstado) {
+        return usuarioDao.getByCorreoAndEstado(eCorreo, eEstado);
+    }
 }
