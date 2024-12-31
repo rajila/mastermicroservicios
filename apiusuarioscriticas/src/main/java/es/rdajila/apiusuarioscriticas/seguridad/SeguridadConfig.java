@@ -1,13 +1,18 @@
 package es.rdajila.apiusuarioscriticas.seguridad;
 
-import es.rdajila.apiusuarioscriticas.AuthEntryPointJwt;
+import es.rdajila.apiusuarioscriticas.jwt.AuthEntryPointJwt;
+import es.rdajila.apiusuarioscriticas.jwt.AuthenticationFilterJwt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -35,6 +40,7 @@ public class SeguridadConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/usuarios/**").permitAll()
                         .requestMatchers("/api/roles/**").permitAll()
                         .requestMatchers("/api/documentos/**").permitAll()
@@ -56,7 +62,7 @@ public class SeguridadConfig {
     }
 
     @Bean
-    public  AuthenticationFilterJwt jwtAuthenticationFilter() {
+    public AuthenticationFilterJwt jwtAuthenticationFilter() {
         return new AuthenticationFilterJwt();
     }
 

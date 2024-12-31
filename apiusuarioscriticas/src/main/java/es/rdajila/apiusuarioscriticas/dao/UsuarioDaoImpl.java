@@ -39,7 +39,7 @@ public class UsuarioDaoImpl implements IUsuarioDao{
     }
 
     @Override
-    public Usuario getByCorreoAndEstado(String eCorreo, Integer eEstado) {
+    public Optional<Usuario> getByCorreoAndEstado(String eCorreo, Integer eEstado) {
         return repository.findByCorreoAndEstado(eCorreo, eEstado);
     }
 

@@ -9,23 +9,28 @@ import lib.rdajila.helper.ConstantsHelper;
 import lib.rdajila.helper.ErrorHelper;
 import lib.rdajila.helper.ResponseHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UsuarioServiceImpl implements IUsuarioService {
     private final IUsuarioDao usuarioDao;
     private final IDocumentoService documentoService;
     private final IRolService rolService;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public UsuarioServiceImpl(IUsuarioDao usuarioDao,
                               IDocumentoService documentoService,
-                              IRolService rolService) {
+                              IRolService rolService,
+                              PasswordEncoder passwordEncoder) {
         this.usuarioDao = usuarioDao;
         this.documentoService = documentoService;
         this.rolService = rolService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -71,18 +76,14 @@ public class UsuarioServiceImpl implements IUsuarioService {
     }
 
     private void validate(UsuarioDtoIn eEntDao, ResponseHelper _result, Boolean eIsNew) {
+        Usuario dbUsuario = usuarioDao.getById(eEntDao.getId() != null ? eEntDao.getId() : 0).orElse(null);
         // Verifica si el usuario no es nuevo
         if (!eIsNew) {
-            Usuario dbUsuario = usuarioDao.getById(eEntDao.getId() != null ? eEntDao.getId() : 0).orElse(null);
             if (dbUsuario == null) {
                 _result.setIdData(eEntDao.getId());
                 _result.setStatus(ConstantsHelper.FAILURE);
                 _result.getErrors().add(new ErrorHelper("entity","No existe la entidad de usuario!"));
                 return;
-            }
-            // Si password es null o vacio, se toma la actual
-            if (eEntDao.getPassword() == null || eEntDao.getPassword().isEmpty()) {
-                eEntDao.setPassword(dbUsuario.getPassword());
             }
         }
 
@@ -91,6 +92,19 @@ public class UsuarioServiceImpl implements IUsuarioService {
         if (dbRol == null) {
             _result.getErrors().add(new ErrorHelper("rol","Rol no valido!"));
         }
+
+        // validate password
+        if(dbUsuario == null && (eEntDao.getPassword() == null || eEntDao.getPassword().isEmpty())) {
+            _result.setStatus(ConstantsHelper.FAILURE);
+            _result.getErrors().add(new ErrorHelper("password", "El password no puede ser vacio"));
+        }else if(dbUsuario != null &&
+                (eEntDao.getPassword() == null || eEntDao.getPassword().isEmpty())){
+            eEntDao.setPassword(dbUsuario.getPassword());
+        }else{
+            eEntDao.setPassword(passwordEncoder.encode((eEntDao.getPassword())));
+        }
+
+        // Validate existe usuario con email
 
         _result.setIdData(0);
         if (!_result.getErrors().isEmpty()) _result.setStatus(ConstantsHelper.FAILURE);
@@ -139,7 +153,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
     }
 
     @Override
-    public Usuario getByCorreoAndEstado(String eCorreo, Integer eEstado) {
+    public Optional<Usuario> getByCorreoAndEstado(String eCorreo, Integer eEstado) {
         return usuarioDao.getByCorreoAndEstado(eCorreo, eEstado);
     }
 }

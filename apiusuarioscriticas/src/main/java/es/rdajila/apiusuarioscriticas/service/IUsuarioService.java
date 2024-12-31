@@ -5,6 +5,7 @@ import es.rdajila.apiusuarioscriticas.model.Usuario;
 import lib.rdajila.helper.ResponseHelper;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IUsuarioService {
     ResponseHelper create(UsuarioDtoIn eUsuario);
@@ -12,5 +13,5 @@ public interface IUsuarioService {
     List<Usuario> getAll();
     Usuario getById(int eId);
     ResponseHelper delete(int eId);
-    Usuario getByCorreoAndEstado(String eCorreo, Integer eEstado);
+    Optional<Usuario> getByCorreoAndEstado(String eCorreo, Integer eEstado);
 }

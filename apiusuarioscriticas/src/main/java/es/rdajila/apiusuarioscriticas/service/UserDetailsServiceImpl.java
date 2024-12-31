@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-    private IUsuarioService service;
+    private final IUsuarioService service;
 
     @Autowired
     public UserDetailsServiceImpl(IUsuarioService service){
@@ -28,7 +28,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Usuario user = service.getByCorreoAndEstado(username,1).orElseThrow(() -> new UsernameNotFoundException("Username or Email not found"));
-        return new User(user.getCorreo(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
+        return new User(user.getCorreo(), user.getPassword(), mapRolesToAuthorities(user.getRoles().stream().toList()));
     }
 
     private Collection<GrantedAuthority> mapRolesToAuthorities(List<Rol> roles) {
