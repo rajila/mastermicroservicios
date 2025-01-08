@@ -3,6 +3,7 @@ package es.uah.rdajila.apigateway.controller;
 import es.uah.rdajila.apigateway.dto.LoginDtoIn;
 import es.uah.rdajila.apigateway.dto.LoginDtoOut;
 import es.uah.rdajila.apigateway.jwt.GeneratorJwt;
+import es.uah.rdajila.apigateway.jwt.UserLoginJwt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +34,8 @@ public class AuthController {
                         loginDto.getUsername(),
                         loginDto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        UserLoginJwt user = (UserLoginJwt) authentication.getPrincipal();
         String token = generatorJwt.generateToken(authentication);
-        return new ResponseEntity<>(new LoginDtoOut(token, ""), HttpStatus.OK);
+        return new ResponseEntity<>(new LoginDtoOut(token, user.getNombres(), user.getRol()), HttpStatus.OK);
     }
 }

@@ -1,11 +1,11 @@
 package es.uah.rdajila.apigateway.service;
 
+import es.uah.rdajila.apigateway.jwt.UserLoginJwt;
 import es.uah.rdajila.apigateway.model.Rol;
 import es.uah.rdajila.apigateway.model.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -27,7 +27,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Usuario user = service.getByCorreoAndEstado(username,1).orElseThrow(() -> new UsernameNotFoundException("Username or Email not found"));
-        return new User(user.getCorreo(), user.getPassword(), mapRolesToAuthorities(user.getRoles().stream().toList()));
+        //return new User(user.getCorreo(), user.getPassword(), mapRolesToAuthorities(user.getRoles().stream().toList()));
+        return new UserLoginJwt(user.getCorreo(),
+                user.getPassword(),
+                mapRolesToAuthorities(user.getRoles().stream().toList()),
+                "",
+                user.getNombre() + " " + user.getApellido(),
+                !user.getRoles().isEmpty() ? user.getRoles().stream().toList().getFirst().getCodigo() : "",
+                user.getCorreo()
+        );
     }
 
     private Collection<GrantedAuthority> mapRolesToAuthorities(List<Rol> roles) {

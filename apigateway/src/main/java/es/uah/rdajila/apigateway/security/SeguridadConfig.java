@@ -44,9 +44,18 @@ public class SeguridadConfig {
                         .requestMatchers("/api/signup/**").permitAll()
                 )
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/usuarios/**").hasAnyAuthority("ADMIN")
+                        .requestMatchers("/api/usuarios/**").hasAnyAuthority("ADMIN", "USER")
                         .requestMatchers("/api/roles/**").hasAnyAuthority("ADMIN")
                         .requestMatchers("/api/documentos/**").hasAnyAuthority("ADMIN")
+                )
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/api/paises/**").hasAnyAuthority("ADMIN")
+                        .requestMatchers("/api/directores/**").hasAnyAuthority("ADMIN")
+                        .requestMatchers("/api/peliculas/**").hasAnyAuthority("ADMIN", "USER")
+                        .requestMatchers("/api/actores/**").hasAnyAuthority("ADMIN", "USER")
+                        .requestMatchers("/api/generos/**").hasAnyAuthority("ADMIN", "USER")
+                )
+                .authorizeHttpRequests(authorize -> authorize
                         .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults());

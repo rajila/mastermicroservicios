@@ -13,33 +13,49 @@ import static org.springframework.cloud.gateway.server.mvc.filter.BeforeFilterFu
 @Configuration
 public class Routes {
     @Bean
-    public RouterFunction<ServerResponse> registerUserServiceRoute() {
-        return GatewayRouterFunctions.route("regoister-user-service")
+    public RouterFunction<ServerResponse> userServiceRegisterRoute() {
+        return GatewayRouterFunctions.route("userservice-register")
                 .route(RequestPredicates.path("/api/signup/**"), HandlerFunctions.http("http://localhost:8082"))
                 .before(rewritePath("%2520", " "))
                 .build();
     }
 
     @Bean
-    public RouterFunction<ServerResponse> userServicesRoute() {
-        return GatewayRouterFunctions.route("user-service")
+    public RouterFunction<ServerResponse> userServiceUsersRoute() {
+        return GatewayRouterFunctions.route("userservice-users")
                 .route(RequestPredicates.path("/api/usuarios/**"), HandlerFunctions.http("http://localhost:8082"))
                 .before(rewritePath("%2520", " "))
                 .build();
     }
 
     @Bean
-    public RouterFunction<ServerResponse> userRolServicesRoute() {
-        return GatewayRouterFunctions.route("user-rol-service")
+    public RouterFunction<ServerResponse> userServiceRolesRoute() {
+        return GatewayRouterFunctions.route("userservice-roles")
                 .route(RequestPredicates.path("/api/roles/**"), HandlerFunctions.http("http://localhost:8082"))
                 .before(rewritePath("%2520", " "))
                 .build();
     }
 
     @Bean
-    public RouterFunction<ServerResponse> userDocumentServicesRoute() {
-        return GatewayRouterFunctions.route("user-rol-service")
+    public RouterFunction<ServerResponse> userServiceDocumentsRoute() {
+        return GatewayRouterFunctions.route("userservice-documents")
                 .route(RequestPredicates.path("/api/documentos/**"), HandlerFunctions.http("http://localhost:8082"))
+                .before(rewritePath("%2520", " "))
+                .build();
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> movieServiceRoute() {
+        return GatewayRouterFunctions.route("movieservice-movies")
+                .route(RequestPredicates.path("/api/peliculas/**"), HandlerFunctions.http("http://localhost:8081"))
+                .before(rewritePath("%2520", " "))
+                .route(RequestPredicates.path("/api/paises/**"), HandlerFunctions.http("http://localhost:8081"))
+                .before(rewritePath("%2520", " "))
+                .route(RequestPredicates.path("/api/generos/**"), HandlerFunctions.http("http://localhost:8081"))
+                .before(rewritePath("%2520", " "))
+                .route(RequestPredicates.path("/api/directores/**"), HandlerFunctions.http("http://localhost:8081"))
+                .before(rewritePath("%2520", " "))
+                .route(RequestPredicates.path("/api/actores/**"), HandlerFunctions.http("http://localhost:8081"))
                 .before(rewritePath("%2520", " "))
                 .build();
     }
