@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>PeliculasApp | Aplicación de gestión de peliculas</title>
+  <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+
+<div class="container px-5 py-5">
+  <h1 class="text-center">Registro nuevo usuario</h1>
+  <h2 th:text="${titulo}"
+      class="text-secondary border border-success border-top-0 border-left-0 border-right-0"></h2>
+  <form th:action="@{/register/save}" method="post" th:object="${usuario}">
+    <div th:if="${!result.getErrors().isEmpty()}" class='alert alert-danger' role='alert'>
+      Por favor corrija los siguientes errores:
+      <ul>
+        <li th:each="err : ${result.getErrors()}">
+          <b>[</b><span th:text="${err.getField().toUpperCase()}"></span><b>]</b>
+          <span th:text="${err.getMessage()}"></span>
+        </li>
+      </ul>
+    </div>
+    <div class="mb-3">
+      <label for="nombre" class="form-label">Nombre</label>
+      <input type="text" class="form-control" th:field="*{nombre}" id="nombre" name="nombre"
+             placeholder="Escriba el nombre del usuario" required="required">
+    </div>
+    <div class="mb-3">
+      <label for="apellido" class="form-label">Apellidos</label>
+      <input type="text" class="form-control" th:field="*{apellido}" id="apellido" name="apellido"
+             placeholder="Escriba apellido del usuario" required="required">
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Contraseña</label>
+      <input type="text" class="form-control" th:field="*{password}" id="password" name="password"
+             placeholder="Escriba la clave del usuario" required="required">
+    </div>
+    <div class="mb-3">
+      <label for="correo" class="form-label">Correo</label>
+      <input type="text" class="form-control" th:field="*{correo}" id="correo" name="correo"
+             placeholder="Escriba el correo del usuario" required="required">
+    </div>
+    <button type="submit" class="btn btn-dark">Registrarse</button>
+  </form>
+
+  <hr>
+  <a class="btn btn-primary" role="button" th:href="@{/login/}">Ir a Login</a>
+
+</div>
+</div>
+
+<script th:src="@{/js/bootstrap.min.js}"></script>
+
+</body>
+</html>

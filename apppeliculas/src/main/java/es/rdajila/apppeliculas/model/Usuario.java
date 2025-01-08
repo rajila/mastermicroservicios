@@ -1,31 +1,24 @@
 package es.rdajila.apppeliculas.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Usuario {
     private Integer id;
     private String nombre;
     private String apellido;
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+    private String correo;
+    private String password;
+    private String base64;
+    private String tipoDocumento;
+    private String tipoOrigenDocumento;
+    private Integer documentoId;
+    private Integer rolId;
+    private Integer estado;
 }

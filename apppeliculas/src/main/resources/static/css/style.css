@@ -33,5 +33,20 @@ fieldset.pelicula legend{
     margin-right: 18px;
     background: darkblue;
     color: white;
-    font-weight: bold;
+}
+
+span.delete-tooltip {
+    cursor: pointer;
+    border: 1px solid;
+    padding: 5px 9px;
+    background: white;
+    color: darkblue;
+    position: relative;
+    top: 0px;
+    left: 5px;
+}
+
+p span.ctoltip {
+    font-size: 13px;
+    font-weight: normal;
 }

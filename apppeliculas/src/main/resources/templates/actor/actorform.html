@@ -10,27 +10,10 @@
 </head>
 <body>
 <div class="container">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Renta de peliculas</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="container collapse navbar-collapse justify-content-end" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a th:href="@{/peliculas}" th:text="'Peliculas'" class="nav-link active" aria-current="page" href="#"></a>
-                    </li>
-                    <li class="nav-item">
-                        <a th:href="@{/actores}" th:text="'Actores'" class="nav-link active" aria-current="page" href="#">Actores</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-  <div th:if="${msg != null}" class='alert alert-success' th:text="${msg}" role='alert'></div>
+    <nav th:replace="~{menu :: menu}"></nav>
+    <div th:if="${msg != null}" class='alert alert-success' th:text="${msg}" role='alert'></div>
     <br/>
-  <div>
+    <div>
       <h3 th:text="${titulo}"></h3>
       <hr/>
       <form th:action="@{/actores/save}" method="post" th:object="${dataCurrent}">

@@ -7,6 +7,7 @@ import es.rdajila.apppeliculas.service.*;
 import es.rdajila.apppeliculas.util.IUploadFileService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -83,6 +84,7 @@ public class PeliculaController {
         return "pelicula/index";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id") Integer eId, RedirectAttributes attributes) {
         peliculaService.delete(eId);
@@ -90,6 +92,7 @@ public class PeliculaController {
         return "redirect:/peliculas";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @GetMapping(value={"/nuevo", "/nuevo/"})
     public String create(Model model) {
         InitListados(model);
@@ -103,6 +106,7 @@ public class PeliculaController {
         return "pelicula/peliculaform";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @GetMapping(value={"/editar/{id}"})
     public String editar(Model model, @PathVariable("id") Integer eId) {
         InitListados(model);
@@ -121,6 +125,7 @@ public class PeliculaController {
         return "pelicula/peliculaform";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @PostMapping("/save")
     public String save(PeliculaDtoIn data, @RequestParam(value="file", required=false) MultipartFile file, RedirectAttributes attributes) {
         if (!file.isEmpty()) {

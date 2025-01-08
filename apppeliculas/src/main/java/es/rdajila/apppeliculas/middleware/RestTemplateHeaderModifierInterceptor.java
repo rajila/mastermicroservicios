@@ -15,6 +15,7 @@ public class RestTemplateHeaderModifierInterceptor implements ClientHttpRequestI
         if (userLogin != null) {
             // Agregamos el token a todas las peticiones que se invoquen desde RestTemplate
             request.getHeaders().add("Authorization", "Bearer " + userLogin.getToken());
+            request.getHeaders().add("roluser", userLogin.getRol());
             response = execution.execute(request, body);
         } else {
             response = execution.execute(request, body);

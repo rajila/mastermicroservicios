@@ -9,7 +9,8 @@ const addElement = (e, idSelector, idContenedor, idsStr) => {
         if(listIds.filter(el => el === idCurrent).length === 0) {
             let _selectedOption = _selectorEl.options[_selectorEl.selectedIndex]
             let _p = document.createElement("p")
-            _p.setAttribute("class", "row w-auto rounded-4")
+            _p.setAttribute("data-id", idCurrent)
+            _p.setAttribute("class", "ctoltip w-auto rounded-pill h-50 h-auto pt-2 pb-2")
 
             let _sText = document.createElement("span")
             _sText.setAttribute("class", "w-auto")
@@ -17,8 +18,12 @@ const addElement = (e, idSelector, idContenedor, idsStr) => {
             _p.appendChild(_sText)
 
             let _sDelete = document.createElement("span")
-            _sDelete.setAttribute("class", "w-auto")
+            _sDelete.setAttribute("class", "w-auto delete-tooltip rounded-circle")
             _sDelete.innerText = `X`
+            _sDelete.setAttribute("data-id", idCurrent)
+            _sDelete.addEventListener("click", function(e) {
+                deleteElement(this, idContenedor, idsStr)
+            })
             _p.appendChild(_sDelete)
 
             _contenedorEl.appendChild(_p)

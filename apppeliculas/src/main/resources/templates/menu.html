@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="menu">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Renta de peliculas</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="container collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a th:href="@{/peliculas}" th:text="'Peliculas'" class="nav-link active" aria-current="page" href="#"></a>
+        </li>
+        <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
+          <a th:href="@{/actores}" th:text="'Actores'" class="nav-link active" aria-current="page" href="#">Actores</a>
+        </li>
+        <li class="nav-item">
+          <a th:href="@{/logout}" class="nav-link active" aria-current="page" href="#">
+            Salir <b>[</b><span sec:authorize="hasAuthority('ADMIN')"> Admin </span>
+            <span sec:authorize="hasAuthority('USER')">   User </span><b>]</b>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</body>

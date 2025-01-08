@@ -1,4 +1,4 @@
-package es.rdajila.apppeliculas.model;
+package es.rdajila.apppeliculas.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,8 +9,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Director {
-    private Integer id;
+public class RegisterDtoIn {
+    private String password;
     private String nombre;
-    private String apellido;
+    private String email;
 }

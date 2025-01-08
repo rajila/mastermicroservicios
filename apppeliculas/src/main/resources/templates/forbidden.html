@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>PeliculasApp | Aplicación de gestión de peliculas</title>
+  <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+
+<div class="container px-5 py-5">
+  <h1 class="text-center">No autorizado!!</h1>
+  <h2 th:text="${titulo}"
+      class="text-secondary border border-success border-top-0 border-left-0 border-right-0"></h2>
+    Sin autorizacion
+  <hr>
+  <a class="btn btn-primary" role="button" th:href="@{/login/}">Ir a Login</a>
+
+</div>
+</div>
+
+<script th:src="@{/js/bootstrap.min.js}"></script>
+
+</body>
+</html>
