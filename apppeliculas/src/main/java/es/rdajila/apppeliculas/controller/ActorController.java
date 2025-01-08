@@ -1,7 +1,6 @@
 package es.rdajila.apppeliculas.controller;
 
 import es.rdajila.apppeliculas.dto.ActorDtoIn;
-import es.rdajila.apppeliculas.dto.PeliculaDtoIn;
 import es.rdajila.apppeliculas.model.*;
 import es.rdajila.apppeliculas.service.IActorService;
 import es.rdajila.apppeliculas.service.IPaisService;
