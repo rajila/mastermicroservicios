@@ -2,7 +2,6 @@ package es.rdajila.apiusuarioscriticas.service;
 
 import es.rdajila.apiusuarioscriticas.model.Rol;
 import es.rdajila.apiusuarioscriticas.model.Usuario;
-import es.rdajila.apiusuarioscriticas.service.IUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

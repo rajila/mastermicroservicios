@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface IUsuarioRepository extends JpaRepository<Usuario, Integer> {
     Optional<Usuario> findByCorreoAndEstado(String eEmail, Integer eEstado);
+    Boolean existsByCorreo(String eCorreo);
 }

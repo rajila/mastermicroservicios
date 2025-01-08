@@ -11,4 +11,5 @@ public interface IUsuarioDao {
     List<Usuario> getAll();
     Boolean delete(Integer eId);
     Optional<Usuario> getByCorreoAndEstado(String eCorreo, Integer eEstado);
+    Boolean existsByCorreo(String eCorreo);
 }

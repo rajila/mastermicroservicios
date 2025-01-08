@@ -43,4 +43,9 @@ public class UsuarioDaoImpl implements IUsuarioDao{
         return repository.findByCorreoAndEstado(eCorreo, eEstado);
     }
 
+    @Override
+    public Boolean existsByCorreo(String eCorreo) {
+        return repository.existsByCorreo(eCorreo);
+    }
+
 }

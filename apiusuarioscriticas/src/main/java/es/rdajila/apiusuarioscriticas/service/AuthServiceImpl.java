@@ -30,7 +30,7 @@ public class AuthServiceImpl implements IAuthService{
         eUsuario.setTipoDocumento(ConstantsHelper.DOCUMENT_GEN_TYPE);
         eUsuario.setBase64("test");
 
-        ResponseHelper rolRH = rolService.getByCode("CLIENTE");
+        ResponseHelper rolRH = rolService.getByCode("USER");
         if (rolRH.getStatus().compareTo(ConstantsHelper.SUCCESS) == 0) {
             eUsuario.setRolId(rolRH.getIdData());
             return usuarioService.create(eUsuario);

@@ -8,6 +8,7 @@ import es.rdajila.apiusuarioscriticas.model.Usuario;
 import lib.rdajila.helper.ConstantsHelper;
 import lib.rdajila.helper.ErrorHelper;
 import lib.rdajila.helper.ResponseHelper;
+import lib.rdajila.helper.ValidationsHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -104,7 +105,21 @@ public class UsuarioServiceImpl implements IUsuarioService {
             eEntDao.setPassword(passwordEncoder.encode((eEntDao.getPassword())));
         }
 
-        // Validate existe usuario con email
+        // Validate email
+        if(!ValidationsHelper.emailIsValid(eEntDao.getCorreo())) {
+            _result.setStatus(ConstantsHelper.FAILURE);
+            _result.getErrors().add(new ErrorHelper("correo", "El correo no puede ser vacio"));
+        }else if(dbUsuario != null) {
+            if (dbUsuario.getCorreo().compareToIgnoreCase(eEntDao.getCorreo()) != 0 &&
+                    usuarioDao.existsByCorreo(eEntDao.getCorreo())
+            ) {
+                _result.setStatus(ConstantsHelper.FAILURE);
+                _result.getErrors().add(new ErrorHelper("correo", "Ya existe un usuario con ese correo"));
+            }
+        }else if(usuarioDao.existsByCorreo(eEntDao.getCorreo())) {
+            _result.setStatus(ConstantsHelper.FAILURE);
+            _result.getErrors().add(new ErrorHelper("correo", "Ya existe un usuario con ese correo"));
+        }
 
         _result.setIdData(0);
         if (!_result.getErrors().isEmpty()) _result.setStatus(ConstantsHelper.FAILURE);
