@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -16,23 +17,42 @@ public class PeliculaServiceImpl implements IPeliculaService{
     private final IGeneroDao generoDao;
     private final IPaisDao paisDao;
     private final IActorDao actorDao;
+    private final IActorService actorService;
+    private final IDirectorService directorService;
 
     @Autowired
     public PeliculaServiceImpl(IPeliculaDao peliculaDao,
                                IDirectorDao directorDao,
                                IGeneroDao generoDao,
                                IPaisDao paisDao,
-                               IActorDao actorDao) {
+                               IActorDao actorDao,
+                               IActorService actorService,
+                               IDirectorService directorService) {
         this.peliculaDao = peliculaDao;
         this.directorDao = directorDao;
         this.generoDao = generoDao;
         this.paisDao = paisDao;
         this.actorDao = actorDao;
+        this.actorService = actorService;
+        this.directorService = directorService;
     }
 
     @Override
     public List<Pelicula> getAll() {
-        return peliculaDao.getAll();
+        return peliculaDao.getAll().stream().peek(el -> {
+            List<Actor> actorList = new ArrayList<>();
+            el.getActores().forEach(actor -> {
+                Actor _actor = actorService.getById(actor.getId());
+                actorList.add(_actor);
+            });
+            el.getActores().clear();
+            el.getActores().addAll(actorList);
+            if(el.getDirectorp() != null) {
+                Director _director = directorService.getById(el.getDirectorp().getId());
+                el.getDirectorp().setNombre(_director.getNombre());
+                el.getDirectorp().setApellido(_director.getApellido());
+            }
+        }).toList();
     }
 
     @Override
@@ -117,12 +137,38 @@ public class PeliculaServiceImpl implements IPeliculaService{
 
     @Override
     public List<Pelicula> getByTitulo(String eTitulo) {
-        return peliculaDao.getByTitulo(eTitulo);
+        return peliculaDao.getByTitulo(eTitulo).stream().peek(el -> {
+            List<Actor> actorList = new ArrayList<>();
+            el.getActores().forEach(actor -> {
+                Actor _actor = actorService.getById(actor.getId());
+                actorList.add(_actor);
+            });
+            el.getActores().clear();
+            el.getActores().addAll(actorList);
+            if(el.getDirectorp() != null) {
+                Director _director = directorService.getById(el.getDirectorp().getId());
+                el.getDirectorp().setNombre(_director.getNombre());
+                el.getDirectorp().setApellido(_director.getApellido());
+            }
+        }).toList();
     }
 
     @Override
     public List<Pelicula> getByGeneroId(Integer eGeneroId) {
-        return peliculaDao.getByGeneroId(eGeneroId);
+        return peliculaDao.getByGeneroId(eGeneroId).stream().peek(el -> {
+            List<Actor> actorList = new ArrayList<>();
+            el.getActores().forEach(actor -> {
+                Actor _actor = actorService.getById(actor.getId());
+                actorList.add(_actor);
+            });
+            el.getActores().clear();
+            el.getActores().addAll(actorList);
+            if(el.getDirectorp() != null) {
+                Director _director = directorService.getById(el.getDirectorp().getId());
+                el.getDirectorp().setNombre(_director.getNombre());
+                el.getDirectorp().setApellido(_director.getApellido());
+            }
+        }).toList();
     }
 
     @Override
@@ -130,11 +176,39 @@ public class PeliculaServiceImpl implements IPeliculaService{
         eTitulo = eTitulo == null ? "" : eTitulo;
         eGeneroId = eGeneroId == null ? 0 : eGeneroId;
         eAutorId = eAutorId == null ? 0 : eAutorId;
-        return peliculaDao.getByTituloOrGeneroIdOrAutorId(eTitulo, eGeneroId, eAutorId);
+        return peliculaDao.getByTituloOrGeneroIdOrAutorId(eTitulo, eGeneroId, eAutorId).stream().peek(el -> {
+            List<Actor> actorList = new ArrayList<>();
+            el.getActores().forEach(actor -> {
+                Actor _actor = actorService.getById(actor.getId());
+                actorList.add(_actor);
+            });
+            el.getActores().clear();
+            el.getActores().addAll(actorList);
+            if(el.getDirectorp() != null) {
+                Director _director = directorService.getById(el.getDirectorp().getId());
+                el.getDirectorp().setNombre(_director.getNombre());
+                el.getDirectorp().setApellido(_director.getApellido());
+            }
+        }).toList();
     }
 
     @Override
     public Pelicula getById(Integer eId) {
-        return peliculaDao.getById(eId).orElse(null);
+        Pelicula dataDb = peliculaDao.getById(eId).orElse(null);
+        if (dataDb != null) {
+            List<Actor> actorList = new ArrayList<>();
+            dataDb.getActores().forEach(actor -> {
+                Actor _actor = actorService.getById(actor.getId());
+                actorList.add(_actor);
+            });
+            dataDb.getActores().clear();
+            dataDb.getActores().addAll(actorList);
+            if(dataDb.getDirectorp() != null) {
+                Director _director = directorService.getById(dataDb.getDirectorp().getId());
+                dataDb.getDirectorp().setNombre(_director.getNombre());
+                dataDb.getDirectorp().setApellido(_director.getApellido());
+            }
+        }
+        return dataDb;
     }
 }

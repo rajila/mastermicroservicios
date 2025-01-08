@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface IDirectorService {
     List<Director> getAll();
+    Director getById(Integer eId);
 }
