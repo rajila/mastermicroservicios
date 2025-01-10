@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Aplicación de gestión de peliculas</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/util.js}"></script>
+</head>
+<body>
+
+<div class="container">
+    <nav th:replace="~{menu :: menu}"></nav>
+    <div th:if="${msg != null}" class='alert alert-success' th:text="${msg}" role='alert'></div>
+    <br/>
+    <div>
+        <fieldset class="filtro rounded-2 px-3 py-2">
+            <legend class="float-none w-auto px-2">Filtros</legend>
+            <form th:action="@{/usuarios/search}" method="post" th:object="${filtroCurrent}">
+                <div class="row">
+                    <div class="col mb-3">
+                        <input class="form-control" name="titulo" id="titulo" type="text" th:field="*{txt}" placeholder="Buscar por nombre o correo"  />
+                    </div>
+                    <div class="col mb-3">
+                        <select class="form-select" th:field="*{rolId}" name="rolId" id="rolId">
+                            <option value="0">Todos roles</option>
+                            <option th:each="el : ${rolList}" th:value="${el.id}" th:text="${el.nombre}"></option>
+                        </select>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-success btn-sm">Buscar</button>
+                        <button type="submit" onclick="cleanFilters();" class="btn btn-dark btn-sm">Limpiar</button>
+                    </div>
+
+                </div>
+            </form>
+        </fieldset>
+    </div>
+    <div class="text-end py-1">
+        <a th:href="@{/usuarios/nuevo  }" th:text="'Nuevo'" class="btn btn-primary btn-sm" role="button" title="Nuevo usuario.">
+            <i class="fas fa-pencil-alt" aria-hidden="true"></i>
+        </a>
+    </div>
+    <hr />
+    <div class="row justify-content-between justify-content-evenly">
+        <h3 style="margin-bottom: 25px;">Listado de usuarios</h3>
+        <div class="card card_custom" th:each="el : ${dataList}">
+            <div class="card-body justify-content-center">
+                <div class="flex-column">
+                    <div class="portada">
+                        <img class="img_portada" alt="No Disponible" th:src="@{/img/actor.jpg}" />
+                    </div>
+                    <div class="data justify-content-end">
+                        <p th:text="${el.nombre + ' ' + el.apellido}"></p>
+                        <p th:text="${el.rolName}"></p>
+                        <p th:text="${el.correo}"></p>
+                        <a th:href="@{/usuarios/editar/{id}  (id=${el.id})  }" th:text="'Editar'" class="btn btn-success btn-sm" role="button" title="Editar usuario.">
+                            <i class="fas fa-pencil-alt" aria-hidden="true"></i>
+                        </a>
+                        <a th:href="@{/usuarios/delete/{id}  (id=${el.id})   }" th:text="'Eliminar'" onclick="return confirm('¿Estas seguro?')" class="btn btn-danger btn-sm" role="button" title="Eliminar usuario.">
+                            <i class="fas fa-trash" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

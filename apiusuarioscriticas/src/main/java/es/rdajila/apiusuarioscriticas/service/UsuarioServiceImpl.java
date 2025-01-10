@@ -146,8 +146,9 @@ public class UsuarioServiceImpl implements IUsuarioService {
         eUsuarioTarget.setNombre(eUsuarioSource.getNombre().trim());
         eUsuarioTarget.setApellido(eUsuarioSource.getApellido().trim());
         eUsuarioTarget.setCorreo(eUsuarioSource.getCorreo().trim());
-        eUsuarioTarget.setPassword(eUsuarioSource.getPassword().trim());
+        eUsuarioTarget.setPassword(eUsuarioSource.getPassword()!=null?eUsuarioSource.getPassword().trim():"");
         eUsuarioTarget.setEstado(eUsuarioSource.getEstado());
+        eUsuarioTarget.getRoles().clear();
         eUsuarioTarget.getRoles().add(dbRol);
         eUsuarioTarget.setDocumento(dbDoc);
     }
@@ -170,5 +171,15 @@ public class UsuarioServiceImpl implements IUsuarioService {
     @Override
     public Optional<Usuario> getByCorreoAndEstado(String eCorreo, Integer eEstado) {
         return usuarioDao.getByCorreoAndEstado(eCorreo, eEstado);
+    }
+
+    @Override
+    public List<Usuario> getAllFilterRolesAdminOrUser() {
+        return usuarioDao.getAllFilterRolesAdminOrUser();
+    }
+
+    @Override
+    public List<Usuario> getByNombresOrCorreoOrRolId(String txt, Integer rolId) {
+        return usuarioDao.getByNombresOrCorreoOrRolId(txt, rolId);
     }
 }

@@ -16,6 +16,9 @@
         <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
           <a th:href="@{/actores}" th:text="'Actores'" class="nav-link active" aria-current="page" href="#">Actores</a>
         </li>
+        <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
+          <a th:href="@{/usuarios}" th:text="'Usuarios'" class="nav-link active" aria-current="page" href="#">Usuarios</a>
+        </li>
         <li class="nav-item">
           <a th:href="@{/logout}" class="nav-link active" aria-current="page" href="#">
             Salir <b>[</b><span sec:authorize="hasAuthority('ADMIN')"> Admin </span>

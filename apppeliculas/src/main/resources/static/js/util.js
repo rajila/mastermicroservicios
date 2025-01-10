@@ -51,3 +51,11 @@ const deleteElement = (e, idContenedor, idsStr) => {
         }
     }
 }
+
+const cleanFilters = () => {
+    document.getElementById("titulo") && (document.getElementById("titulo").value='')
+    document.getElementById("rolId") && (document.getElementById("rolId").value='0')
+    document.getElementById("autorId") && (document.getElementById("autorId").value='0')
+    document.getElementById("generoId") && (document.getElementById("generoId").value='0')
+    return true
+}

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>PeliculasApp | Aplicación de gestión de peliculas</title>
+  <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+  <nav th:replace="~{menu :: menu}"></nav>
+  <br/>
+  <div>
+    <h3 th:text="${titulo}"></h3>
+    <hr/>
+    <form th:action="@{/usuarios/save}" method="post" th:object="${dataCurrent}">
+      <div th:if="${!result.getErrors().isEmpty()}" class='alert alert-danger' role='alert'>
+        Por favor corrija los siguientes errores:
+        <ul>
+          <li th:each="err : ${result.getErrors()}">
+            <b>[</b><span th:text="${err.getField().toUpperCase()}"></span><b>]</b>
+            <span th:text="${err.getMessage()}"></span>
+          </li>
+        </ul>
+      </div>
+      <div class="mb-3">
+        <label for="nombre" class="form-label">Nombre</label>
+        <input type="text" class="form-control" th:field="*{nombre}" id="nombre" name="nombre"
+               placeholder="Escriba el nombre del usuario" required="required">
+      </div>
+      <div class="mb-3">
+        <label for="apellido" class="form-label">Apellidos</label>
+        <input type="text" class="form-control" th:field="*{apellido}" id="apellido" name="apellido"
+               placeholder="Escriba apellido del usuario" required="required">
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Contraseña</label>
+        <input type="password" class="form-control" th:field="*{password}" id="password" name="password"
+               placeholder="Escriba la clave del usuario">
+      </div>
+      <div class="col mb-3">
+        <label for="estado" class="form-label">Estado</label>
+        <select class="form-select" th:field="*{estado}" name="estado" id="estado">
+          <option value="0">Seleccionar estado</option>
+          <option value="1">Alta</option>
+          <option value="2">Baja</option>
+        </select>
+      </div>
+      <div class="col mb-3">
+        <label for="rolId" class="form-label">Rol</label>
+        <select class="form-select" th:field="*{rolId}" name="rolId" id="rolId">
+          <option value="0">Seleccionar rol</option>
+          <option th:each="el : ${rolList}" th:value="${el.id}" th:text="${el.nombre}"></option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="correo" class="form-label">Correo</label>
+        <input type="text" class="form-control" th:field="*{correo}" id="correo" name="correo"
+               placeholder="Escriba el correo del usuario" required="required">
+      </div>
+      <div class="text-center">
+        <a th:href="@{/usuarios   }" th:text="'Atras'" class="btn btn-danger btn-sm" role="button" title="Atras">
+          <i class="fas fa-trash" aria-hidden="true"></i></a>
+        <button type="submit" class="btn btn-dark btn-sm">Guardar</button>
+      </div>
+      <input name="id" id="id" type="hidden" th:field="*{id}"  />
+      <input name="documentoId" id="documentoId" type="hidden" th:field="*{documentoId}"  />
+    </form>
+  </div>
+
+</div>
+
+<script th:src="@{/js/bootstrap.min.js}"></script>
+
+</body>
+</html>

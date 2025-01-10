@@ -53,6 +53,9 @@ public class Usuario {
     private String rolName;
 
     @Transient
+    private Integer rolId;
+
+    @Transient
     private Integer documentoId;
 
     public Integer getDocumentoId() {
@@ -72,6 +75,13 @@ public class Usuario {
             return this.getRoles().iterator().next().getCodigo().toUpperCase();
         }
         return "";
+    }
+
+    public Integer getRolId() {
+        if (!this.roles.isEmpty()) {
+            return this.getRoles().iterator().next().getId();
+        }
+        return 0;
     }
 
     public Documento getDocumento() {

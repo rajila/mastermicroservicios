@@ -14,4 +14,6 @@ public interface IUsuarioService {
     Usuario getById(int eId);
     ResponseHelper delete(int eId);
     Optional<Usuario> getByCorreoAndEstado(String eCorreo, Integer eEstado);
+    List<Usuario> getAllFilterRolesAdminOrUser();
+    List<Usuario> getByNombresOrCorreoOrRolId(String txt, Integer rolId);
 }

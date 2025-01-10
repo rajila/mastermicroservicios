@@ -48,4 +48,14 @@ public class UsuarioDaoImpl implements IUsuarioDao{
         return repository.existsByCorreo(eCorreo);
     }
 
+    @Override
+    public List<Usuario> getAllFilterRolesAdminOrUser() {
+        return repository.getByRolesCodeAdminOrUser();
+    }
+
+    @Override
+    public List<Usuario> getByNombresOrCorreoOrRolId(String eTxt, Integer eRolId) {
+        return repository.getByNombresOrCorreoOrRolId(eTxt, eRolId);
+    }
+
 }

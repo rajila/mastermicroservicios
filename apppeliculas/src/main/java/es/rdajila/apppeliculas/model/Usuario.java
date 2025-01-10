@@ -21,4 +21,5 @@ public class Usuario {
     private Integer documentoId;
     private Integer rolId;
     private Integer estado;
+    private String rolName;
 }

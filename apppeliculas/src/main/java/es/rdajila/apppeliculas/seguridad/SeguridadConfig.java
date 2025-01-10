@@ -45,6 +45,7 @@ public class SeguridadConfig {
                         .requestMatchers( "/register/**").permitAll()
                         .requestMatchers( "/peliculas/**").hasAnyAuthority("ADMIN", "USER")
                         .requestMatchers( "/actores/**").hasAnyAuthority("ADMIN")
+                        .requestMatchers( "/usuarios/**").hasAnyAuthority("ADMIN")
                         .anyRequest().authenticated()
                 );
         return http.build();

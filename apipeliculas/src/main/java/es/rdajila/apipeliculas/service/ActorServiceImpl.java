@@ -15,6 +15,7 @@ import lib.rdajila.helper.ResponseHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -53,7 +54,7 @@ public class ActorServiceImpl implements IActorService{
         _user.setId(null);
         _user.setNombre(eActorInput.getNombre());
         _user.setApellido(eActorInput.getApellido());
-        _user.setCorreo(eActorInput.getNombre() + "_" + eActorInput.getApellido() + "@gmail.com");
+        _user.setCorreo(eActorInput.getNombre() + "_" + eActorInput.getApellido() + "_" + new Date().getTime() + "@gmail.com");
         _user.setBase64("examplexxx");
         _user.setPassword("examplexxx");
         _user.setEstado(0); // Inactivo

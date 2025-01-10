@@ -8,6 +8,8 @@ import lib.rdajila.helper.ResponseHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RolServiceImpl implements IRolService{
     private final IRolDao rolDao;
@@ -31,5 +33,10 @@ public class RolServiceImpl implements IRolService{
             _result.getErrors().add(new ErrorHelper("entity", "Error al cargar rol"));
         } else _result.setIdData(rol.getId());
         return _result;
+    }
+
+    @Override
+    public List<Rol> getAll() {
+        return rolDao.getAll();
     }
 }

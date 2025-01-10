@@ -1,7 +1,6 @@
 package es.rdajila.apipeliculas.repository;
 
 import es.rdajila.apipeliculas.model.Actor;
-import es.rdajila.apipeliculas.model.Genero;
 import es.rdajila.apipeliculas.model.Pelicula;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

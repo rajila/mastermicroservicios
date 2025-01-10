@@ -12,4 +12,6 @@ public interface IUsuarioDao {
     Boolean delete(Integer eId);
     Optional<Usuario> getByCorreoAndEstado(String eCorreo, Integer eEstado);
     Boolean existsByCorreo(String eCorreo);
+    List<Usuario> getAllFilterRolesAdminOrUser();
+    List<Usuario> getByNombresOrCorreoOrRolId(String eTxt, Integer eRolId);
 }

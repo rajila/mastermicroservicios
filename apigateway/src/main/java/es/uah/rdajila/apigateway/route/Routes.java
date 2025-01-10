@@ -13,39 +13,21 @@ import static org.springframework.cloud.gateway.server.mvc.filter.BeforeFilterFu
 @Configuration
 public class Routes {
     @Bean
-    public RouterFunction<ServerResponse> userServiceRegisterRoute() {
-        return GatewayRouterFunctions.route("userservice-register")
+    public RouterFunction<ServerResponse> serviceCriticasRoute() {
+        return GatewayRouterFunctions.route("service-criticas")
                 .route(RequestPredicates.path("/api/signup/**"), HandlerFunctions.http("http://localhost:8082"))
                 .before(rewritePath("%2520", " "))
-                .build();
-    }
-
-    @Bean
-    public RouterFunction<ServerResponse> userServiceUsersRoute() {
-        return GatewayRouterFunctions.route("userservice-users")
                 .route(RequestPredicates.path("/api/usuarios/**"), HandlerFunctions.http("http://localhost:8082"))
                 .before(rewritePath("%2520", " "))
-                .build();
-    }
-
-    @Bean
-    public RouterFunction<ServerResponse> userServiceRolesRoute() {
-        return GatewayRouterFunctions.route("userservice-roles")
                 .route(RequestPredicates.path("/api/roles/**"), HandlerFunctions.http("http://localhost:8082"))
                 .before(rewritePath("%2520", " "))
-                .build();
-    }
-
-    @Bean
-    public RouterFunction<ServerResponse> userServiceDocumentsRoute() {
-        return GatewayRouterFunctions.route("userservice-documents")
                 .route(RequestPredicates.path("/api/documentos/**"), HandlerFunctions.http("http://localhost:8082"))
                 .before(rewritePath("%2520", " "))
                 .build();
     }
 
     @Bean
-    public RouterFunction<ServerResponse> movieServiceRoute() {
+    public RouterFunction<ServerResponse> servicePeliculasRoute() {
         return GatewayRouterFunctions.route("movieservice-movies")
                 .route(RequestPredicates.path("/api/peliculas/**"), HandlerFunctions.http("http://localhost:8081"))
                 .before(rewritePath("%2520", " "))

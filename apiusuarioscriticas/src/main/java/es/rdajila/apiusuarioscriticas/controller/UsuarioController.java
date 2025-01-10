@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/usuarios")
@@ -24,6 +25,18 @@ public class UsuarioController {
     @GetMapping({"", "/"})
     public ResponseEntity<List<Usuario>> getAll() {
         return ResponseEntity.ok(service.getAll());
+    }
+
+    @GetMapping({"/by/roles/", "/by/roles"})
+    public ResponseEntity<List<Usuario>> getAllByRoles() {
+        return ResponseEntity.ok(service.getAllFilterRolesAdminOrUser());
+    }
+
+    @GetMapping(value={"/by/roles"}, params = {"txt", "rolId"})
+    public ResponseEntity<List<Usuario>> getAllByFilters(@RequestParam("txt") Optional<String> txt, @RequestParam("rolId") Optional<Integer> rolId) {
+        String filterTxt = txt.orElse("");
+        Integer filterRolId = rolId.orElse(0);
+        return ResponseEntity.ok(service.getByNombresOrCorreoOrRolId(filterTxt, filterRolId));
     }
 
     @CrossOrigin
