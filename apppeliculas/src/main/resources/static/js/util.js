@@ -57,5 +57,6 @@ const cleanFilters = () => {
     document.getElementById("rolId") && (document.getElementById("rolId").value='0')
     document.getElementById("autorId") && (document.getElementById("autorId").value='0')
     document.getElementById("generoId") && (document.getElementById("generoId").value='0')
+    document.getElementById("peliculaId") && (document.getElementById("peliculaId").value='0')
     return true
 }

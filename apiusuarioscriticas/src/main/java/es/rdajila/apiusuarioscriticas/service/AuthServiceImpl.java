@@ -1,10 +1,13 @@
 package es.rdajila.apiusuarioscriticas.service;
 
 import es.rdajila.apiusuarioscriticas.dto.UsuarioDtoIn;
+import es.rdajila.apiusuarioscriticas.jwt.ContextUtil;
+import es.rdajila.apiusuarioscriticas.model.Usuario;
 import lib.rdajila.helper.ConstantsHelper;
 import lib.rdajila.helper.ErrorHelper;
 import lib.rdajila.helper.ResponseHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,7 +16,7 @@ public class AuthServiceImpl implements IAuthService{
     private final IRolService rolService;
 
     @Autowired
-    public AuthServiceImpl(IUsuarioService usuarioService,
+    public AuthServiceImpl(@Lazy IUsuarioService usuarioService,
                            IRolService rolService) {
         this.usuarioService = usuarioService;
         this.rolService = rolService;
@@ -41,5 +44,10 @@ public class AuthServiceImpl implements IAuthService{
             _result.getErrors().addAll(rolRH.getErrors());
         }
         return _result;
+    }
+
+    @Override
+    public Usuario getUserLogin() {
+        return usuarioService.getByCorreoAndEstado(ContextUtil.getCurrentUsername(), 1).orElse(null);
     }
 }

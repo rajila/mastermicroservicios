@@ -20,16 +20,16 @@
             <legend class="float-none w-auto px-2">Filtros</legend>
             <form th:action="@{/peliculas/search}" method="get" th:object="${filtroCurrent}">
                 <div class="row">
-                    <div class="col mb-3">
+                    <div class="col-lg mb-3">
                         <input class="form-control" name="titulo" id="titulo" type="text" th:field="*{titulo}" placeholder="Ingresar titulo"  />
                     </div>
-                    <div class="col mb-3">
+                    <div class="col-lg mb-3">
                         <select class="form-select" th:field="*{autorId}" name="autorId" id="autorId">
                             <option value="0">Seleccionar actor</option>
                             <option th:each="el : ${actorList}" th:value="${el.id}" th:text="${el.nombre + ' ' + el.apellido}"></option>
                         </select>
                     </div>
-                    <div class="col mb-3">
+                    <div class="col-lg mb-3">
                         <select class="form-select" th:field="*{generoId}" name="generoId" id="generoId">
                             <option value="0">Seleccionar genero</option>
                             <option th:each="el : ${generoList}" th:value="${el.id}" th:text="${el.nombre}"></option>
@@ -50,7 +50,7 @@
         </a>
     </div>
     <hr />
-    <div class="row justify-content-between justify-content-evenly">
+    <div class="container row justify-content-between justify-content-evenly">
         <h3 style="margin-bottom: 25px;">Listado de peliculas</h3>
         <div class="card card_custom" th:each="el : ${dataList}">
             <div class="card-body justify-content-center">
@@ -60,19 +60,39 @@
                         <img th:class="img_portada" th:src="|data:image;base64,*{el.portada}|" th:alt="Portada" class="product-image">
                     </div>
                     <div class="data justify-content-end">
-                        <p class="align-content-end" th:text="${el.duracion.toString() + ' min'}"></p>
-                        <p th:text="${el.getGeneroStr()}"></p>
-                        <p th:text="${el.getAutorStr()}"></p>
-                        <a sec:authorize="hasAuthority('ADMIN')" th:href="@{/peliculas/editar/{id}  (id=${el.id})  }" th:text="'Editar'" class="btn btn-success btn-sm" role="button" title="Editar el pelicula.">
-                            <i class="fas fa-pencil-alt" aria-hidden="true"></i>
-                        </a>
-                        <a sec:authorize="hasAuthority('ADMIN')" th:href="@{/peliculas/delete/{id}  (id=${el.id})   }" th:text="'Eliminar'" onclick="return confirm('¿Estas seguro?')" class="btn btn-danger btn-sm" role="button" title="Eliminar el pelicula.">
-                            <i class="fas fa-trash" aria-hidden="true"></i></a>
+                        <div class="align-content-end py-1" th:text="${el.duracion.toString() + ' min'}"></div>
+                        <div class="flex-row">
+                            <span class="lblvaloracion">
+                              <input th:id="${'tlblestrella5_'+el.id}" type="radio" th:name="${'lblestrella_'+el.id}" value="5" th:checked="*{el.notaEval == 5}" disabled />
+                              <label th:for="${'tlblestrella5_'+el.id}">&#9733;</label>
+                              <input th:id="${'tlblestrella4_'+el.id}" type="radio" th:name="${'lblestrella_'+el.id}" value="4" th:checked="*{el.notaEval == 4}" disabled />
+                              <label th:for="${'tlblestrella4_'+el.id}">&#9733;</label>
+                              <input th:id="${'tlblestrella3_'+el.id}" type="radio" th:name="${'lblestrella_'+el.id}" value="3" th:checked="*{el.notaEval == 3}" disabled />
+                              <label th:for="${'tlblestrella3_'+el.id}">&#9733;</label>
+                              <input th:id="${'tlblestrella2_'+el.id}" type="radio" th:name="${'lblestrella_'+el.id}" value="2" th:checked="*{el.notaEval == 2}" disabled />
+                              <label th:for="${'tlblestrella2_'+el.id}">&#9733;</label>
+                              <input th:id="${'tlblestrella1_'+el.id}" type="radio" th:name="${'lblestrella_'+el.id}" value="1" th:checked="*{el.notaEval == 1}" disabled />
+                              <label th:for="${'tlblestrella1_'+el.id}">&#9733;</label>
+                            </span>
+                        </div>
+                        <div class="py-2" th:text="${el.getGeneroStr()}"></div>
+                        <div th:text="${el.getAutorStr()}"></div>
+                        <div class="pt-3">
+                            <a sec:authorize="hasAnyAuthority('ADMIN', 'USER')" th:href="@{/peliculas/{id}/reviews  (id=${el.id})  }" th:text="'Review'" class="btn btn-success btn-sm" role="button" title="Review pelicula.">
+                                <i class="fas fa-pencil-alt" aria-hidden="true"></i>
+                            </a>
+                            <a sec:authorize="hasAuthority('ADMIN')" th:href="@{/peliculas/editar/{id}  (id=${el.id})  }" th:text="'Editar'" class="btn btn-success btn-sm" role="button" title="Editar el pelicula.">
+                                <i class="fas fa-pencil-alt" aria-hidden="true"></i>
+                            </a>
+                            <a sec:authorize="hasAuthority('ADMIN')" th:href="@{/peliculas/delete/{id}  (id=${el.id})   }" th:text="'Eliminar'" onclick="return confirm('¿Estas seguro?')" class="btn btn-danger btn-sm" role="button" title="Eliminar el pelicula.">
+                                <i class="fas fa-trash" aria-hidden="true"></i></a>
+                        </div>
                     </div>
                 </div>
 
             </div>
         </div>
+        <div th:if="${dataList.size() == 0}" class="text-center text-danger py-2" style="border-top: 2px solid black;">No hay registros para mostrar!</div>
     </div>
 </div>
 </body>

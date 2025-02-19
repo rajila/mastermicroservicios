@@ -4,7 +4,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="menu">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Renta de peliculas</a>
+    <a class="navbar-brand" href="#">Gestión de peliculas</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -12,6 +12,9 @@
       <ul class="navbar-nav">
         <li class="nav-item">
           <a th:href="@{/peliculas}" th:text="'Peliculas'" class="nav-link active" aria-current="page" href="#"></a>
+        </li>
+        <li class="nav-item">
+          <a th:href="@{/criticas}" th:text="'Criticas'" class="nav-link active" aria-current="page" href="#"></a>
         </li>
         <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
           <a th:href="@{/actores}" th:text="'Actores'" class="nav-link active" aria-current="page" href="#">Actores</a>

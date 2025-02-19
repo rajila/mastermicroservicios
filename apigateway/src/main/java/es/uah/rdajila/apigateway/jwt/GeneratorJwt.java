@@ -16,7 +16,7 @@ import javax.crypto.spec.SecretKeySpec;
 @Component
 public class GeneratorJwt {
     SecretKeySpec key = new SecretKeySpec("cmRhamlsYTIwMjQkQA==cmRhamlsYTIwMjQkQA==cmRhamlsYTIwMjQkQA==".getBytes(StandardCharsets.UTF_8), "HmacSHA256");
-    private static final long JWT_EXPIRATION = 1800000;
+    private static final long JWT_EXPIRATION = 1200000;//1200000
 
     public String generateToken(Authentication authentication) {
         String username = authentication.getName();

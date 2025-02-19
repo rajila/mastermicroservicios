@@ -23,6 +23,8 @@ public class Routes {
                 .before(rewritePath("%2520", " "))
                 .route(RequestPredicates.path("/api/documentos/**"), HandlerFunctions.http("http://localhost:8082"))
                 .before(rewritePath("%2520", " "))
+                .route(RequestPredicates.path("/api/criticas/**"), HandlerFunctions.http("http://localhost:8082"))
+                .before(rewritePath("%2520", " "))
                 .build();
     }
 

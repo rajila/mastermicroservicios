@@ -47,6 +47,7 @@ public class SeguridadConfig {
                         .requestMatchers("/api/usuarios/**").hasAnyAuthority("ADMIN", "USER")
                         .requestMatchers("/api/roles/**").hasAnyAuthority("ADMIN")
                         .requestMatchers("/api/documentos/**").hasAnyAuthority("ADMIN")
+                        .requestMatchers("/api/criticas/**").hasAnyAuthority("ADMIN", "USER")
                 )
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/api/paises/**").hasAnyAuthority("ADMIN")

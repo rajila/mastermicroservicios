@@ -33,7 +33,7 @@
     </div>
     <div class="mb-3">
       <label for="password" class="form-label">Contraseña</label>
-      <input type="text" class="form-control" th:field="*{password}" id="password" name="password"
+      <input type="password" class="form-control" th:field="*{password}" id="password" name="password"
              placeholder="Escriba la clave del usuario" required="required">
     </div>
     <div class="mb-3">
@@ -41,11 +41,13 @@
       <input type="text" class="form-control" th:field="*{correo}" id="correo" name="correo"
              placeholder="Escriba el correo del usuario" required="required">
     </div>
-    <button type="submit" class="btn btn-dark">Registrarse</button>
-  </form>
+    <div class="text-center">
+      <a class="btn btn-primary" role="button" th:href="@{/login/}">Ir a Login</a>
+      <button type="submit" class="btn btn-dark">Registrarse</button>
+    </div>
 
-  <hr>
-  <a class="btn btn-primary" role="button" th:href="@{/login/}">Ir a Login</a>
+
+  </form>
 
 </div>
 </div>

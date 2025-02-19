@@ -12,6 +12,7 @@ import lib.rdajila.helper.ValidationsHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,16 +23,19 @@ public class UsuarioServiceImpl implements IUsuarioService {
     private final IDocumentoService documentoService;
     private final IRolService rolService;
     private final PasswordEncoder passwordEncoder;
+    private final ICriticaService criticaService;
 
     @Autowired
     public UsuarioServiceImpl(IUsuarioDao usuarioDao,
                               IDocumentoService documentoService,
                               IRolService rolService,
-                              PasswordEncoder passwordEncoder) {
+                              PasswordEncoder passwordEncoder,
+                              ICriticaService criticaService) {
         this.usuarioDao = usuarioDao;
         this.documentoService = documentoService;
         this.rolService = rolService;
         this.passwordEncoder = passwordEncoder;
+        this.criticaService = criticaService;
     }
 
     @Override
@@ -66,12 +70,19 @@ public class UsuarioServiceImpl implements IUsuarioService {
     }
 
     @Override
+    @Transactional
     public ResponseHelper delete(int eId) {
         ResponseHelper _result = new ResponseHelper();
-        Boolean eliminado = usuarioDao.delete(eId);
-        if (!eliminado) {
+        ResponseHelper eliminadoCriticas = criticaService.deleteByUsuarioId(eId);
+        if(eliminadoCriticas.getStatus().compareTo(ConstantsHelper.SUCCESS) == 0) {
+            Boolean eliminado = usuarioDao.delete(eId);
+            if (!eliminado) {
+                _result.setStatus(ConstantsHelper.FAILURE);
+                _result.getErrors().add(new ErrorHelper("entity", "Error al eliminar el usuario"));
+            }
+        } else {
             _result.setStatus(ConstantsHelper.FAILURE);
-            _result.getErrors().add(new ErrorHelper("entity", "Error al eliminar el usuario"));
+            _result.getErrors().add(new ErrorHelper("entity", "Error al eliminar las criticas"));
         }
         return _result;
     }

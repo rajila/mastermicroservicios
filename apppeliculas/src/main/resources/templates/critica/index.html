@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Aplicación de gestión de peliculas</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/util.js}"></script>
+</head>
+<body>
+
+<div class="container">
+    <nav th:replace="~{menu :: menu}"></nav>
+    <div th:if="${msg != null}" class='alert alert-success' th:text="${msg}" role='alert'></div>
+    <br/>
+    <div>
+        <fieldset class="filtro rounded-2 px-3 py-2">
+            <legend class="float-none w-auto px-2">Filtros</legend>
+            <form th:action="@{/criticas/search}" method="post" th:object="${filtroCurrent}">
+                <div class="row">
+                    <div class="col-lg mb-3" sec:authorize="hasAuthority('ADMIN')">
+                        <input class="form-control" name="titulo" id="titulo" type="text" th:field="*{txt}" placeholder="Buscar usuario"  />
+                    </div>
+                    <div class="col-lg mb-3">
+                        <select class="form-select" th:field="*{peliculaId}" name="peliculaId" id="peliculaId">
+                            <option value="0">Todas peliculas</option>
+                            <option th:each="el : ${peliculaList}" th:value="${el.id}" th:text="${el.titulo}"></option>
+                        </select>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-success btn-sm">Buscar</button>
+                        <button type="submit" onclick="cleanFilters();" class="btn btn-dark btn-sm">Limpiar</button>
+                    </div>
+
+                </div>
+            </form>
+        </fieldset>
+    </div>
+    <hr />
+    <div class="row justify-content-between justify-content-evenly">
+        <h3 style="margin-bottom: 25px;">Listado de criticas</h3>
+        <div id="contenedor-table">
+            <div th:each="el : ${lCriticas}" class="row row-table-div">
+                <div class="col-auto col-nro-table">*</div>
+                <div class="col">
+                    <div class="row">
+                        <div class="text-start fw-bold">Fecha</div>
+                        <div th:text="${#dates.format(el.fecha, 'dd/MMMM/yyyy')}" class="text-start txt-value"></div>
+                    </div>
+                    <div class="row">
+                        <div class="text-start fw-bold">Pelicula</div>
+                        <div th:text="${el.pelicula}" class="text-start txt-value"></div>
+                    </div>
+                    <div class="row" sec:authorize="hasAuthority('ADMIN')">
+                        <div class="text-start fw-bold">Usuario</div>
+                        <div th:text="${el.usuario.nombre + ' ' + el.usuario.apellido}" class="text-start txt-value"></div>
+                    </div>
+                    <div class="row">
+                        <div class="text-start fw-bold">Valoración</div>
+                        <div class="text-start txt-value">
+                            <div class="flex-row">
+                              <span class="lblvaloracion">
+                                <input th:id="${'clblestrella5_'+el.id}" type="radio" th:name="${'cblestrella_'+el.id}" value="5" th:checked="*{el.nota == 5}" disabled />
+                                <label th:for="${'clblestrella5_'+el.id}">&#9733;</label>
+                                <input th:id="${'clblestrella4_'+el.id}" type="radio" th:name="${'cblestrella_'+el.id}" value="4" th:checked="*{el.nota == 4}" disabled />
+                                <label th:for="${'clblestrella4_'+el.id}">&#9733;</label>
+                                <input th:id="${'clblestrella3_'+el.id}" type="radio" th:name="${'cblestrella_'+el.id}" value="3" th:checked="*{el.nota == 3}" disabled />
+                                <label th:for="${'clblestrella3_'+el.id}">&#9733;</label>
+                                <input th:id="${'clblestrella2_'+el.id}" type="radio" th:name="${'cblestrella_'+el.id}" value="2" th:checked="*{el.nota == 2}" disabled />
+                                <label th:for="${'clblestrella2_'+el.id}">&#9733;</label>
+                                <input th:id="${'clblestrella1_'+el.id}" type="radio" th:name="${'cblestrella_'+el.id}" value="1" th:checked="*{el.nota == 1}" disabled />
+                                <label th:for="${'clblestrella1_'+el.id}">&#9733;</label>
+                              </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="text-start fw-bold">Comentario</div>
+                        <div class="text-justify txt-value" th:text="${el.valoracion}"></div>
+                    </div>
+                    <div class="row py-3" sec:authorize="hasAuthority('ADMIN')">
+                        <div>
+                        <a th:href="@{/criticas/delete/{id}  (id=${el.id})   }" th:text="'Eliminar'" onclick="return confirm('¿Estas seguro?')" class="btn btn-danger btn-sm" role="button" title="Eliminar la critica.">
+                            <i class="fas fa-trash" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div th:if="${lCriticas.size() == 0}" class="text-center text-danger">No hay registros para mostrar!</div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Pelicula</th>
+                    <th scope="col" sec:authorize="hasAuthority('ADMIN')">Usuario</th>
+                    <th scope="col">Valoración</th>
+                    <th scope="col">Comentario</th>
+                    <th scope="col" class="col-auto" sec:authorize="hasAuthority('ADMIN')">&nbsp;</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="el : ${lCriticas}">
+                    <td th:text="${#dates.format(el.fecha, 'dd/MMMM/yyyy')}"></td>
+                    <td th:text="${el.pelicula}"></td>
+                    <td sec:authorize="hasAuthority('ADMIN')" th:text="${el.Usuario.nombre + ' ' + el.Usuario.apellido}"></td>
+                    <td>
+                        <div class="flex-row">
+                            <span class="lblvaloracion">
+                              <input th:id="${'tlblestrella5_'+el.id}" type="radio" th:name="${'lblestrella_'+el.id}" value="5" th:checked="*{el.nota == 5}" disabled />
+                              <label th:for="${'tlblestrella5_'+el.id}">&#9733;</label>
+                              <input th:id="${'tlblestrella4_'+el.id}" type="radio" th:name="${'lblestrella_'+el.id}" value="4" th:checked="*{el.nota == 4}" disabled />
+                              <label th:for="${'tlblestrella4_'+el.id}">&#9733;</label>
+                              <input th:id="${'tlblestrella3_'+el.id}" type="radio" th:name="${'lblestrella_'+el.id}" value="3" th:checked="*{el.nota == 3}" disabled />
+                              <label th:for="${'tlblestrella3_'+el.id}">&#9733;</label>
+                              <input th:id="${'tlblestrella2_'+el.id}" type="radio" th:name="${'lblestrella_'+el.id}" value="2" th:checked="*{el.nota == 2}" disabled />
+                              <label th:for="${'tlblestrella2_'+el.id}">&#9733;</label>
+                              <input th:id="${'tlblestrella1_'+el.id}" type="radio" th:name="${'lblestrella_'+el.id}" value="1" th:checked="*{el.nota == 1}" disabled />
+                              <label th:for="${'tlblestrella1_'+el.id}">&#9733;</label>
+                            </span>
+                        </div>
+                    </td>
+                    <td class="col-lg-6 text-justify" th:text="${el.valoracion}"></td>
+                    <td class="text-justify" sec:authorize="hasAuthority('ADMIN')">
+                        <a th:href="@{/criticas/delete/{id}  (id=${el.id})   }" th:text="'Eliminar'" onclick="return confirm('¿Estas seguro?')" class="btn btn-danger btn-sm" role="button" title="Eliminar la critica.">
+                            <i class="fas fa-trash" aria-hidden="true"></i></a>
+                    </td>
+                </tr>
+                <tr th:if="${lCriticas.size() == 0}">
+                    <td class="text-center text-danger" colspan="7">No hay registros para mostrar!</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

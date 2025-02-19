@@ -20,7 +20,7 @@
         </a>
     </div>
     <hr />
-    <div class="row justify-content-between justify-content-evenly">
+    <div class="container row justify-content-between justify-content-evenly">
         <h3 style="margin-bottom: 25px;">Listado de actores</h3>
         <div class="card card_custom" th:each="el : ${dataList}">
             <div class="card-body justify-content-center">
@@ -42,6 +42,7 @@
 
             </div>
         </div>
+        <div th:if="${dataList.size() == 0}" class="text-center text-danger py-2" style="border-top: 2px solid black;">No hay registros para mostrar!</div>
     </div>
 </div>
 </body>

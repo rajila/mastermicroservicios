@@ -1,8 +1,12 @@
 package es.rdajila.apipeliculas.service;
 
+import es.rdajila.apipeliculas.api.service.ICrticaApiService;
 import es.rdajila.apipeliculas.dao.*;
 import es.rdajila.apipeliculas.dto.PeliculaDtoInput;
 import es.rdajila.apipeliculas.model.*;
+import lib.rdajila.helper.ConstantsHelper;
+import lib.rdajila.helper.ErrorHelper;
+import lib.rdajila.helper.ResponseHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +23,7 @@ public class PeliculaServiceImpl implements IPeliculaService{
     private final IActorDao actorDao;
     private final IActorService actorService;
     private final IDirectorService directorService;
+    private final ICrticaApiService crticaApiService;
 
     @Autowired
     public PeliculaServiceImpl(IPeliculaDao peliculaDao,
@@ -27,7 +32,8 @@ public class PeliculaServiceImpl implements IPeliculaService{
                                IPaisDao paisDao,
                                IActorDao actorDao,
                                IActorService actorService,
-                               IDirectorService directorService) {
+                               IDirectorService directorService,
+                               ICrticaApiService crticaApiService) {
         this.peliculaDao = peliculaDao;
         this.directorDao = directorDao;
         this.generoDao = generoDao;
@@ -35,6 +41,7 @@ public class PeliculaServiceImpl implements IPeliculaService{
         this.actorDao = actorDao;
         this.actorService = actorService;
         this.directorService = directorService;
+        this.crticaApiService = crticaApiService;
     }
 
     @Override
@@ -71,12 +78,12 @@ public class PeliculaServiceImpl implements IPeliculaService{
             pelicula.setDirectorp(directorObj);
 
             // Agregamos los actores
-            ePeliculaInput.getlActores().forEach(id -> {
+            ePeliculaInput.getLActores().forEach(id -> {
                 actorDao.getById(id).ifPresent(actorObj -> pelicula.getActores().add(actorObj));
             });
 
             // Agregamos los generos
-            ePeliculaInput.getlGeneros().forEach(id -> {
+            ePeliculaInput.getLGeneros().forEach(id -> {
                 generoDao.getById(id).ifPresent(generoObj -> pelicula.getGeneros().add(generoObj));
             });
 
@@ -111,12 +118,12 @@ public class PeliculaServiceImpl implements IPeliculaService{
             pelicula.getGeneros().clear();
 
             // Agregamos los actores
-            ePeliculaInput.getlActores().forEach(id -> {
+            ePeliculaInput.getLActores().forEach(id -> {
                 actorDao.getById(id).ifPresent(actorObj -> pelicula.getActores().add(actorObj));
             });
 
             // Agregamos los generos
-            ePeliculaInput.getlGeneros().forEach(id -> {
+            ePeliculaInput.getLGeneros().forEach(id -> {
                 generoDao.getById(id).ifPresent(generoObj -> pelicula.getGeneros().add(generoObj));
             });
 
@@ -128,9 +135,13 @@ public class PeliculaServiceImpl implements IPeliculaService{
 
     @Override
     public Boolean delete(Integer eId) {
-        Pelicula peliculaObj = peliculaDao.getById(eId).orElse(null);
-        if (peliculaObj != null) {
-            return peliculaDao.delete(peliculaObj);
+        ResponseHelper eliminadoCriticas = crticaApiService.deleteByPeliculaId(eId);
+
+        if(eliminadoCriticas.getStatus().compareTo(ConstantsHelper.SUCCESS) == 0) {
+            Pelicula peliculaObj = peliculaDao.getById(eId).orElse(null);
+            if (peliculaObj != null) {
+                return peliculaDao.delete(peliculaObj);
+            }
         }
         return false;
     }

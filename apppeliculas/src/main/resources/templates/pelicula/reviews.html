@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Aplicación de gestión de peliculas</title>
+  <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+  <link th:href="@{/css/style.css}" rel="stylesheet">
+  <script th:src="@{/js/bootstrap.min.js}"></script>
+  <script th:src="@{/js/util.js}"></script>
+</head>
+<body>
+<div class="container">
+  <nav th:replace="~{menu :: menu}"></nav>
+  <div th:if="${msg != null}" class='alert alert-success' th:text="${msg}" role='alert'></div>
+  <br/>
+  <div>
+    <h3 th:text="${titulo}"></h3>
+    <hr/>
+    <div class="details-movie">
+      <fieldset class="pelicula rounded-2 px-3 py-2">
+        <legend class="float-none w-auto px-2"><label class="form-label">Pelicula</label></legend>
+        <div class="row">
+          <section class="col-lg-4 text-center">
+            <div class="pb-1"><b><label th:text="*{data.titulo}"></label></b></div>
+            <img th:class="img_portada" th:src="|data:image;base64,*{data.portada}|" th:alt="Portada" class="product-image">
+            <div class="flex-row">
+              <span th:text="*{dataNota}" class="me-1" />
+              <span class="lblvaloracion">
+                <input id="lblestrella1" type="radio" name="lblestrella" value="5" th:checked="*{dataNotaVal == 5}" disabled />
+                <label for="lblestrella1">&#9733;</label>
+                <input id="lblestrella2" type="radio" name="lblestrella" value="4" th:checked="*{dataNotaVal == 4}" disabled />
+                <label for="lblestrella2">&#9733;</label>
+                <input id="lblestrella3" type="radio" name="lblestrella" value="3" th:checked="*{dataNotaVal == 3}" disabled />
+                <label for="lblestrella3">&#9733;</label>
+                <input id="lblestrella4" type="radio" name="lblestrella" value="2" th:checked="*{dataNotaVal == 2}" disabled />
+                <label for="lblestrella4">&#9733;</label>
+                <input id="lblestrella5" type="radio" name="lblestrella" value="1" th:checked="*{dataNotaVal == 1}" disabled />
+                <label for="lblestrella5">&#9733;</label>
+              </span>
+            </div>
+            <div class="flex-row" th:text="${data.duracion + ' min'}"></div>
+            <div class="flex-row" th:text="${data.generoStr}"></div>
+          </section>
+          <section class="col-lg">
+            <form th:action="@{/peliculas/{id}/reviews (id=${id})}" method="post" th:object="${dataCurrent}" enctype="multipart/form-data">
+              <h5>Review</h5>
+              <div th:if="${!result.getErrors().isEmpty()}" class='alert alert-danger' role='alert'>
+                Por favor corrija los siguientes errores:
+                <ul>
+                  <li th:each="err : ${result.getErrors()}">
+                    <b>[</b><span th:text="${err.getField().toUpperCase()}"></span><b>]</b>
+                    <span th:text="${err.getMessage()}"></span>
+                  </li>
+                </ul>
+              </div>
+              <div class="col mb-3">
+                <label for="actores" class="form-label">Actores</label>
+                <div class="form-control" id="actores" th:text="${data.autorStr}"></div>
+              </div>
+              <div class="col mb-3">
+                <label for="sinopsis" class="form-label">Sinopsis</label>
+                <div class="form-control" id="sinopsis" th:text="${data.sinopsis}"></div>
+              </div>
+              <div class="col mb-3">
+                <label for="titulo" class="form-label">Nota</label>
+                <p class="valoracion">
+                  <input id="radio1" type="radio" name="estrellas" value="5" th:field="*{nota}">
+                  <label for="radio1">&#9733;</label>
+                  <input id="radio2" type="radio" name="estrellas" value="4" th:field="*{nota}">
+                  <label for="radio2">&#9733;</label>
+                  <input id="radio3" type="radio" name="estrellas" value="3" th:field="*{nota}">
+                  <label for="radio3">&#9733;</label>
+                  <input id="radio4" type="radio" name="estrellas" value="2" th:field="*{nota}">
+                  <label for="radio4">&#9733;</label>
+                  <input id="radio5" type="radio" name="estrellas" value="1" th:field="*{nota}">
+                  <label for="radio5">&#9733;</label>
+                </p>
+              </div>
+              <div class="col mb-3">
+                <label for="titulo" class="form-label">Comentario</label>
+                <textarea class="form-control" rows="3" name="titulo" id="titulo" type="text" th:field="*{valoracion}" placeholder="Ingresar comentario"></textarea>
+                <label class="text-danger" th:if="${criticaId != 0}" th:text="${'Usted ya publico una review!!'}"></label>
+              </div>
+
+              <div class="text-center">
+                <a th:href="@{/peliculas   }" th:text="'Atras'" class="btn btn-danger btn-sm" role="button" title="Atras">
+                  <i class="fas fa-trash" aria-hidden="true"></i></a>
+                <button th:if="${criticaId == 0}" type="submit" class="btn btn-dark btn-sm">Publicar</button>
+              </div>
+              <input name="id" id="id" type="hidden" th:field="*{id}"  />
+              <input name="peliculaId" id="peliculaId" type="hidden" th:field="*{peliculaId}"  />
+            </form>
+          </section>
+        </div>
+      </fieldset>
+    </div>
+    <div class="container">
+      <h4>Historico de reviews</h4>
+      <div id="contenedor-table">
+        <div th:each="el : ${lCriticas}" class="row row-table-div">
+          <div class="col-auto col-nro-table">*</div>
+          <div class="col">
+            <div class="row">
+              <div class="text-start fw-bold">Fecha</div>
+              <div th:text="${#dates.format(el.fecha, 'dd/MMMM/yyyy')}" class="text-start txt-value"></div>
+            </div>
+            <div class="row">
+              <div class="text-start fw-bold">Usuario</div>
+              <div th:text="${el.usuario.nombre + ' ' + el.usuario.apellido}" class="text-start txt-value"></div>
+            </div>
+            <div class="row">
+              <div class="text-start fw-bold">Valoración</div>
+              <div class="text-start txt-value">
+                <div class="flex-row">
+                  <span class="lblvaloracion">
+                    <input th:id="${'clblestrella5_'+el.id}" type="radio" th:name="${'cblestrella_'+el.id}" value="5" th:checked="*{el.nota == 5}" disabled />
+                    <label th:for="${'clblestrella5_'+el.id}">&#9733;</label>
+                    <input th:id="${'clblestrella4_'+el.id}" type="radio" th:name="${'cblestrella_'+el.id}" value="4" th:checked="*{el.nota == 4}" disabled />
+                    <label th:for="${'clblestrella4_'+el.id}">&#9733;</label>
+                    <input th:id="${'clblestrella3_'+el.id}" type="radio" th:name="${'cblestrella_'+el.id}" value="3" th:checked="*{el.nota == 3}" disabled />
+                    <label th:for="${'clblestrella3_'+el.id}">&#9733;</label>
+                    <input th:id="${'clblestrella2_'+el.id}" type="radio" th:name="${'cblestrella_'+el.id}" value="2" th:checked="*{el.nota == 2}" disabled />
+                    <label th:for="${'clblestrella2_'+el.id}">&#9733;</label>
+                    <input th:id="${'clblestrella1_'+el.id}" type="radio" th:name="${'cblestrella_'+el.id}" value="1" th:checked="*{el.nota == 1}" disabled />
+                    <label th:for="${'clblestrella1_'+el.id}">&#9733;</label>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="text-start fw-bold">Comentario</div>
+              <div class="text-justify txt-value" th:text="${el.valoracion}"></div>
+            </div>
+          </div>
+        </div>
+        <div th:if="${lCriticas.size() == 0}" class="text-center text-danger">No hay registros para mostrar!</div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th scope="col">Fecha</th>
+            <th scope="col">Usuario</th>
+            <th scope="col">Valoración</th>
+            <th scope="col">Comentario</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="el : ${lCriticas}">
+            <td th:text="${#dates.format(el.fecha, 'dd/MMMM/yyyy')}"></td>
+            <td th:text="${el.usuario.nombre + ' ' + el.usuario.apellido}"></td>
+            <td>
+              <div class="flex-row">
+                <span class="lblvaloracion">
+                  <input th:id="${'tlblestrella5_'+el.id}" type="radio" th:name="${'lblestrella_'+el.id}" value="5" th:checked="*{el.nota == 5}" disabled />
+                  <label th:for="${'tlblestrella5_'+el.id}">&#9733;</label>
+                  <input th:id="${'tlblestrella4_'+el.id}" type="radio" th:name="${'lblestrella_'+el.id}" value="4" th:checked="*{el.nota == 4}" disabled />
+                  <label th:for="${'tlblestrella4_'+el.id}">&#9733;</label>
+                  <input th:id="${'tlblestrella3_'+el.id}" type="radio" th:name="${'lblestrella_'+el.id}" value="3" th:checked="*{el.nota == 3}" disabled />
+                  <label th:for="${'tlblestrella3_'+el.id}">&#9733;</label>
+                  <input th:id="${'tlblestrella2_'+el.id}" type="radio" th:name="${'lblestrella_'+el.id}" value="2" th:checked="*{el.nota == 2}" disabled />
+                  <label th:for="${'tlblestrella2_'+el.id}">&#9733;</label>
+                  <input th:id="${'tlblestrella1_'+el.id}" type="radio" th:name="${'lblestrella_'+el.id}" value="1" th:checked="*{el.nota == 1}" disabled />
+                  <label th:for="${'tlblestrella1_'+el.id}">&#9733;</label>
+                </span>
+              </div>
+            </td>
+            <td class="col-lg-6 text-justify" th:text="${el.valoracion}"></td>
+          </tr>
+          <tr th:if="${lCriticas.size() == 0}">
+            <td class="text-center text-danger" colspan="7">No hay registros para mostrar!</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

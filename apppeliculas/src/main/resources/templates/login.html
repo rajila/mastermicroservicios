@@ -7,39 +7,30 @@
 </head>
 <body>
 
-<div class="container px-5 py-5">
+<div class="container py-5">
     <div th:if="${msg != null}" class='alert alert-success' th:text="${msg}" role='alert'></div>
     <div th:if="${msga != null}" class='alert alert-danger' th:text="${msga}" role='alert'></div>
-
-    <h2 class="text-center">Gestión de cursos</h2>
-
+    <h2 class="text-center">Gestion de peliculas</h2>
     <hr>
-    <div class="card-group">
-        <div class="card">
+    <div class="text-center d-flex justify-content-center ">
+        <div class="card col-lg-5" style="min-width: 380px;">
             <div class="card-body">
                 <h3 class="card-title">Inicio de sesión</h3>
                 <form th:action="@{/login}" method="post">
-                    <div class="form-group">
+                    <div class="form-group py-1">
                         <input type="text" name="username" id="username"
                                class="form-control" th:placeholder="Correo" autofocus required/>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group py-1">
                         <input type="password" name="password" id="password"
                                class="form-control" th:placeholder="Contraseña" required/>
                     </div>
+                    <div class="text-end"><a class="btn-primary" role="button" th:href="@{/register}">Registrarse</a></div>
 
-                    <input type="submit" class="btn btn-lg btn-primary btn-block"
+                    <input type="submit" class="btn btn-primary btn-block"
                            th:value="Login"/>
-
                 </form>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-body">
-                <h3 class="card-title">Registro nuevo usuario</h3>
-                <a class="btn btn-primary" role="button" th:href="@{/register}">Registrarse</a>
             </div>
         </div>
     </div>

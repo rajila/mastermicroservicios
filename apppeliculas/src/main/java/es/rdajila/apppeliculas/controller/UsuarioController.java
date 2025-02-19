@@ -1,14 +1,9 @@
 package es.rdajila.apppeliculas.controller;
 
-import es.rdajila.apppeliculas.dto.ActorDtoIn;
-import es.rdajila.apppeliculas.dto.PeliculaFiltroDtoIn;
+
 import es.rdajila.apppeliculas.dto.UsuarioFiltroDtoIn;
-import es.rdajila.apppeliculas.model.Actor;
-import es.rdajila.apppeliculas.model.Pais;
 import es.rdajila.apppeliculas.model.Rol;
 import es.rdajila.apppeliculas.model.Usuario;
-import es.rdajila.apppeliculas.service.IActorService;
-import es.rdajila.apppeliculas.service.IPaisService;
 import es.rdajila.apppeliculas.service.IRolService;
 import es.rdajila.apppeliculas.service.IUsuarioService;
 import lib.rdajila.helper.ConstantsHelper;
