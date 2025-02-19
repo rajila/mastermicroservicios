@@ -46,18 +46,6 @@ public class Pelicula {
             inverseJoinColumns = @JoinColumn(name = "id_genero", referencedColumnName = "id"))
     private List<Genero> generos = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_documento")
-    private Documento documento;
-
-    public Documento getDocumento() {
-        return documento;
-    }
-
-    public void setDocumento(Documento documento) {
-        this.documento = documento;
-    }
-
     public Pais getCountry() {
         return country;
     }
